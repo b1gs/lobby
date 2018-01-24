@@ -3,9 +3,6 @@ package com.example.lobby.event;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-/**
- * Created by ovolkovskyi on 24.01.2018.
- */
 public class ParticipantRepository {
 
 

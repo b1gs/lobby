@@ -1,8 +1,5 @@
 package com.example.lobby.domain;
 
-/**
- * Created by ovolkovskyi on 24.01.2018.
- */
 public class ChatMessage {
 
     private String username;

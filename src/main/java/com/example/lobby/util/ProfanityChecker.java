@@ -5,9 +5,6 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-/**
- * Created by ovolkovskyi on 24.01.2018.
- */
 public class ProfanityChecker {
 
     private Set<String> profanities = new HashSet<>();

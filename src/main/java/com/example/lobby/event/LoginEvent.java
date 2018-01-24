@@ -2,9 +2,6 @@ package com.example.lobby.event;
 
 import java.util.Date;
 
-/**
- * Created by ovolkovskyi on 24.01.2018.
- */
 public class LoginEvent {
 
     private String username;

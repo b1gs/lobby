@@ -12,9 +12,6 @@ import org.springframework.context.annotation.*;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.socket.config.WebSocketMessageBrokerStats;
 
-/**
- * Created by ovolkovskyi on 24.01.2018.
- */
 @Configuration
 @EnableConfigurationProperties(ChatProperties.class)
 public class ChatConfig {

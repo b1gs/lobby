@@ -4,9 +4,6 @@ import com.example.lobby.exception.TooMuchProfanityException;
 
 import java.util.concurrent.atomic.AtomicLong;
 
-/**
- * Created by ovolkovskyi on 24.01.2018.
- */
 public class SessionProfanity {
 
     private long maxProfanityLevel = Long.MAX_VALUE;

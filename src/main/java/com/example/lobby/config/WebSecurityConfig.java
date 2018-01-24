@@ -16,9 +16,6 @@ import org.springframework.security.core.authority.AuthorityUtils;
 
 import java.util.List;
 
-/**
- * Created by ovolkovskyi on 24.01.2018.
- */
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {

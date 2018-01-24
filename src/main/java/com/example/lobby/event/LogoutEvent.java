@@ -1,8 +1,5 @@
 package com.example.lobby.event;
 
-/**
- * Created by ovolkovskyi on 24.01.2018.
- */
 public class LogoutEvent {
 
     private String username;

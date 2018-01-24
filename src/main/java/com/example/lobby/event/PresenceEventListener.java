@@ -8,9 +8,6 @@ import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
 import java.util.Optional;
 
-/**
- * Created by ovolkovskyi on 24.01.2018.
- */
 public class PresenceEventListener {
 
     private ParticipantRepository participantRepository;

@@ -1,7 +1,26 @@
 package org.springframework.boot.actuate.endpoint;
 
-/**
- * Created by ovolkovskyi on 24.01.2018.
- */
-public class WebSocketTraceEndpoint {
+import org.springframework.boot.actuate.trace.Trace;
+import org.springframework.boot.actuate.trace.TraceRepository;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.util.Assert;
+
+import java.util.List;
+
+@ConfigurationProperties(prefix = "endpoints.websockettrace", ignoreUnknownFields = false)
+public class WebSocketTraceEndpoint extends AbstractEndpoint<List<Trace>> {
+
+    private final TraceRepository repository;
+
+    public WebSocketTraceEndpoint(TraceRepository repository) {
+        super("websockettrace");
+        Assert.notNull(repository, "Repository must not be null");
+        this.repository = repository;
+    }
+
+    @Override
+    public List<Trace> invoke() {
+        return this.repository.findAll();
+    }
+
 }

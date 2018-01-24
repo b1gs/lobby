@@ -5,9 +5,6 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.Set;
 
-/**
- * Created by ovolkovskyi on 24.01.2018.
- */
 @ConfigurationProperties(prefix = "chat")
 public class ChatProperties {
 
