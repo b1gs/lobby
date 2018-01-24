@@ -1,7 +1,7 @@
 package com.example.lobby.config;
 
 import com.example.lobby.domain.SessionProfanity;
-import com.example.lobby.event.ParticipantRepository;
+import com.example.lobby.repo.ParticipantRepository;
 import com.example.lobby.event.PresenceEventListener;
 import com.example.lobby.util.ProfanityChecker;
 import org.springframework.beans.factory.annotation.Autowired;

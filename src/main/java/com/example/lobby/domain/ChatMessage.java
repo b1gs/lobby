@@ -26,4 +26,5 @@ public class ChatMessage {
     public String toString() {
         return "ChatMessage [user=" + username + ", message=" + message + "]";
     }
+
 }

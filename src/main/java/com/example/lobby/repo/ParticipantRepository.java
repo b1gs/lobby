@@ -1,4 +1,6 @@
-package com.example.lobby.event;
+package com.example.lobby.repo;
+
+import com.example.lobby.event.LoginEvent;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

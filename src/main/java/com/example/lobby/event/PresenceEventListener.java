@@ -1,5 +1,6 @@
 package com.example.lobby.event;
 
+import com.example.lobby.repo.ParticipantRepository;
 import org.springframework.context.event.EventListener;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
