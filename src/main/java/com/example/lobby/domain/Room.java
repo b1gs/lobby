@@ -25,7 +25,7 @@ public class Room {
 
 
     public void addPlayer(Player player ){
-        if (participants.size() < capacity ){
+        if ( !isFull() ){
             participants.add(player);
         }else {
             LOGGER.info("Room is Full : " + roomName);
@@ -35,5 +35,11 @@ public class Room {
     public void removePlayer(Player player ){
         participants.remove(player);
     }
+
+    public boolean isFull(){
+        return participants.size() >= capacity;
+    }
+
+
 
 }
