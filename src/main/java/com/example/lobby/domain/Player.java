@@ -1,14 +1,11 @@
 package com.example.lobby.domain;
 
+import lombok.Data;
+
+@Data
 public class Player {
 
     private String username;
+    private String email;
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
 }
