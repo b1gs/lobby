@@ -114,4 +114,22 @@ public class RoomController {
         roomService.delete(roomId);
     }
 
+    @PostMapping("/{roomId}/player/{playerId}")
+    @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(
+            nickname = "deleteRoom",
+            value = "deletes room",
+            notes = "deletes room",
+            response = RoomDto.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = HttpURLConnection.HTTP_NO_CONTENT, message = ApiResponseMessages.OK),
+            @ApiResponse(code = HttpURLConnection.HTTP_NOT_FOUND, message = ApiResponseMessages.NOT_FOUND),
+            @ApiResponse(code = HttpURLConnection.HTTP_INTERNAL_ERROR, message = ApiResponseMessages.INTERNAL_SERVER_ERROR)
+    })
+    public void addPlayerToRoom(@Valid @PathVariable Long roomId , @Valid @PathVariable Long playerId  ) {
+
+
+
+    }
+
 }

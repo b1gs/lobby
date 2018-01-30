@@ -43,6 +43,21 @@ public class PlayerController {
         return playerMapper.mapToDtos(playerService.getAllPlayers());
     }
 
+    @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(
+            nickname = "getPlayer",
+            value = "get player",
+            notes = "get player",
+            response = PlayerDto.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = HttpURLConnection.HTTP_OK, message = ApiResponseMessages.OK),
+            @ApiResponse(code = HttpURLConnection.HTTP_INTERNAL_ERROR, message = ApiResponseMessages.INTERNAL_SERVER_ERROR)
+    })
+    public PlayerDto getPlayer(@Valid @PathVariable Long id ){
+        return playerMapper.mapToDto(playerService.getPlayer(id));
+    }
+
     @PostMapping()
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(
@@ -60,7 +75,7 @@ public class PlayerController {
     }
 
 
-    @PutMapping("/{playerId}")
+    @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(
             nickname = "updatePlayer",
@@ -75,5 +90,22 @@ public class PlayerController {
         Player playerUpdate = playerMapper.mapToEntity(playerUpdateDto);
         return playerMapper.mapToDto(playerService.update(playerId, playerUpdate));
     }
+
+    @PostMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(
+            nickname = "deletePlayer",
+            value = "delete player",
+            notes = "delete player",
+            response = PlayerDto.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = HttpURLConnection.HTTP_OK, message = ApiResponseMessages.OK),
+            @ApiResponse(code = HttpURLConnection.HTTP_INTERNAL_ERROR, message = ApiResponseMessages.INTERNAL_SERVER_ERROR)
+    })
+    public void delete(@Valid @PathVariable Long id ){
+        playerService.delete(id);
+    }
+
+
 
 }
