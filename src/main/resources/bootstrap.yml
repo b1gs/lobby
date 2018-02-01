@@ -1,0 +1,32 @@
+server:
+  port: 7788
+
+spring:
+  application:
+    name: lobby
+  session:
+    store-type: hash_map
+
+flyway:
+  placeholders:
+    schema_name: lobby
+
+
+
+logging:
+  level:
+    org:
+      springframework: debug
+management:
+  security:
+    roles: ADMIN
+  websocket:
+    trace-inbound: true
+    trace-outbound: false
+
+
+chat:
+  max-profanity-level: 5
+  disallowed-words: damn, crap, ass
+  destinations.login: /topic/chat.login
+  chat.destinations.logout: /topic/chat.logout
