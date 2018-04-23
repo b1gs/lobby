@@ -1,14 +1,15 @@
+CREATE SCHEMA IF NOT EXISTS lobby;
 
 CREATE SEQUENCE id_seq START 1 INCREMENT 50;
 
-CREATE TABLE users (
+CREATE TABLE player (
   id bigint NOT NULL,
   username character varying(255) NOT NULL,
   email character varying(255),
   rank integer,
   creation_date timestamp with time zone,
   last_login timestamp with time zone,
-  CONSTRAINT "user_pk" PRIMARY KEY (id)
+  CONSTRAINT "player_pk" PRIMARY KEY (id)
 );
 
 CREATE TABLE room (

@@ -13,7 +13,9 @@ import lombok.ToString;
 @ToString(callSuper = true)
 public class PlayerDto extends  BaseDto {
 
+    private Long id;
     private String username;
+    private String email;
     private Long rank;
 
 }

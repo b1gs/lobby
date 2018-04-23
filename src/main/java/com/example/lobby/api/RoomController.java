@@ -29,8 +29,8 @@ import java.util.List;
 public class RoomController {
 
 
-    private RoomMapper roomMapper;
-    private RoomService roomService;
+    private final RoomMapper roomMapper;
+    private final RoomService roomService;
 
 
     @GetMapping()
@@ -59,7 +59,7 @@ public class RoomController {
             @ApiResponse(code = HttpURLConnection.HTTP_OK, message = ApiResponseMessages.OK),
             @ApiResponse(code = HttpURLConnection.HTTP_INTERNAL_ERROR, message = ApiResponseMessages.INTERNAL_SERVER_ERROR)
     })
-    public RoomDto geRoom(@Valid @RequestBody Long roomId){
+    public RoomDto geRoom(@Valid @PathVariable Long roomId){
         return roomMapper.mapToDto(roomService.getRoom(roomId));
     }
 
@@ -110,7 +110,7 @@ public class RoomController {
             @ApiResponse(code = HttpURLConnection.HTTP_NOT_FOUND, message = ApiResponseMessages.NOT_FOUND),
             @ApiResponse(code = HttpURLConnection.HTTP_INTERNAL_ERROR, message = ApiResponseMessages.INTERNAL_SERVER_ERROR)
     })
-    public void delete(@Valid @RequestBody Long roomId ) {
+    public void delete(@Valid @PathVariable Long roomId ) {
         roomService.delete(roomId);
     }
 

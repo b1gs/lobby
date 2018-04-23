@@ -22,6 +22,9 @@ public class RoomDto extends BaseDto {
 
 
     @NotNull
+    private Long id;
+
+    @NotNull
     @Size( min = 1 , max = 30 )
     private String roomName;
 

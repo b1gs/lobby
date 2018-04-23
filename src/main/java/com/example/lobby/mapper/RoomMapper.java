@@ -11,9 +11,9 @@ import java.util.List;
         uses = { JpaEntityMapper.class })
 public interface RoomMapper {
 
-    @Mappings({
-            @Mapping(source = "phone", target = "phoneNumber")
-    })
+//    @Mappings({
+//            @Mapping(source = "phone", target = "phoneNumber")
+//    })
     Room mapToEntity(RoomDto roomDto);
 
     RoomDto mapToDto(Room roomDto);

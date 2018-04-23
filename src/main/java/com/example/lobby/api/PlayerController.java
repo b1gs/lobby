@@ -25,8 +25,8 @@ import java.util.List;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class PlayerController {
 
-    private PlayerMapper playerMapper;
-    private PlayerService playerService;
+    private final PlayerMapper playerMapper;
+    private final PlayerService playerService;
 
     @GetMapping()
     @ResponseStatus(HttpStatus.OK)
