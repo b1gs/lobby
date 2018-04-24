@@ -1,7 +1,7 @@
-package org.springframework.boot.actuate.autoconfigure;
-
-public class WebSocketTraceChannelInterceptorAutoConfiguration {
-
-
-
-}
+//package org.springframework.boot.actuate.autoconfigure;
+//
+//public class WebSocketTraceChannelInterceptorAutoConfiguration {
+//
+//
+//
+//}

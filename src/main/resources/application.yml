@@ -1,0 +1,38 @@
+server:
+  port: 7788
+
+spring:
+  application:
+    name: lobby
+#  session:
+#    store-type: hash_map
+  datasource:
+    platform: postgres
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/${spring.application.name}?currentSchema=${spring.application.name}&stringtype=unspecified
+    username: testing
+    password: testing
+  flyway:
+    url: jdbc:postgresql://localhost:5432/${spring.application.name}
+    schemas: ${spring.application.name}
+    locations: classpath:db/migration,classpath:db/data
+    check-location: true
+    user: testing
+    password: testing
+
+
+logging:
+  level:
+    org:
+      springframework: debug
+management:
+  websocket:
+    trace-inbound: true
+    trace-outbound: false
+
+
+chat:
+  max-profanity-level: 5
+  disallowed-words: damn, crap, ass
+  destinations.login: /topic/chat.login
+  chat.destinations.logout: /topic/chat.logout

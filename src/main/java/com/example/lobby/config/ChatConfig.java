@@ -1,16 +1,19 @@
 package com.example.lobby.config;
 
 import com.example.lobby.domain.SessionProfanity;
-import com.example.lobby.repo.ParticipantRepository;
 import com.example.lobby.event.PresenceEventListener;
+import com.example.lobby.repo.ParticipantRepository;
 import com.example.lobby.util.ProfanityChecker;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.actuate.endpoint.MessageMappingEndpoint;
-import org.springframework.boot.actuate.endpoint.WebSocketEndpoint;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.*;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.web.socket.config.WebSocketMessageBrokerStats;
+import org.springframework.session.ExpiringSession;
+import org.springframework.session.MapSessionRepository;
+import org.springframework.session.SessionRepository;
+
+//import org.springframework.boot.actuate.endpoint.MessageMappingEndpoint;
+//import org.springframework.boot.actuate.endpoint.WebSocketEndpoint;
 
 @Configuration
 @EnableConfigurationProperties(ChatProperties.class)
@@ -50,15 +53,22 @@ public class ChatConfig {
     }
 
     @Bean
-    @Description("Spring Actuator endpoint to expose WebSocket stats")
-    public WebSocketEndpoint websocketEndpoint(WebSocketMessageBrokerStats stats) {
-        return new WebSocketEndpoint(stats);
+    public SessionRepository<ExpiringSession> sessionRepository(){
+        MapSessionRepository repository = new MapSessionRepository();
+        repository.setDefaultMaxInactiveInterval(60);
+        return repository;
     }
 
-    @Bean
-    @Description("Spring Actuator endpoint to expose WebSocket message mappings")
-    public MessageMappingEndpoint messageMappingEndpoint() {
-        return new MessageMappingEndpoint();
-    }
+//    @Bean
+//    @Description("Spring Actuator endpoint to expose WebSocket stats")
+//    public WebSocketEndpoint websocketEndpoint(WebSocketMessageBrokerStats stats) {
+//        return new WebSocketEndpoint(stats);
+//    }
+
+//    @Bean
+//    @Description("Spring Actuator endpoint to expose WebSocket message mappings")
+//    public MessageMappingEndpoint messageMappingEndpoint() {
+//        return new MessageMappingEndpoint();
+//    }
 
 }

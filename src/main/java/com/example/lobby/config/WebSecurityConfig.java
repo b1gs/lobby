@@ -1,7 +1,6 @@
 package com.example.lobby.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -37,6 +36,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .permitAll()
             .and()
             .authorizeRequests()
+            .antMatchers( "/api-docs").permitAll()
+            .antMatchers( "/swagger-ui.html").permitAll()
             .antMatchers( "/v1/**").permitAll()
             .antMatchers("/js/**", "/lib/**", "/images/**", "/css/**", "/index.html", "/").permitAll()
             .antMatchers("/websocket").hasRole("ADMIN")
