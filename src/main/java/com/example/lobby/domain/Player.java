@@ -1,25 +1,20 @@
 package com.example.lobby.domain;
 
 import lombok.Data;
-import org.hibernate.annotations.GenericGenerator;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Data
 @Entity
 @Table(name = "player")
-public class Player {
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+public class Player extends BaseEntity {
 
-    @Id
-    @GenericGenerator(
-            name = "ID_GENERATOR",
-            strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
-            parameters = {
-                    @org.hibernate.annotations.Parameter(name = "sequence_name", value = "ID_SEQ")
-            }
-    )
-    @GeneratedValue(generator = "ID_GENERATOR")
-    private Long id;
 
     @Column(name = "username" , nullable = false )
     private String username;

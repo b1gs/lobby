@@ -1,20 +1,23 @@
 package com.example.lobby.domain;
 
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.util.Set;
 
 @Entity
 @Table(name="room")
-public class Room {
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+public class Room extends BaseEntity {
 
     private static Logger LOGGER = LoggerFactory.getLogger(Room.class);
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
 
     @Column(name = "room_name")
     private String roomName;
@@ -24,14 +27,6 @@ public class Room {
 
     @Transient
     private Set<Player> participants;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getRoomName() {
         return roomName;

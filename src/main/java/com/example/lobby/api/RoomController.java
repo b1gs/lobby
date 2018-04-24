@@ -118,8 +118,8 @@ public class RoomController {
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(
             nickname = "deleteRoom",
-            value = "deletes room",
-            notes = "deletes room",
+            value = "delete player from the room",
+            notes = "delete player from the room",
             response = RoomDto.class)
     @ApiResponses(value = {
             @ApiResponse(code = HttpURLConnection.HTTP_NO_CONTENT, message = ApiResponseMessages.OK),
