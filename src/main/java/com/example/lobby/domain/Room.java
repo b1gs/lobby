@@ -1,19 +1,23 @@
 package com.example.lobby.domain;
 
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import java.util.Set;
 
 @Entity
 @Table(name="room")
-@EqualsAndHashCode(callSuper = true)
+@Getter
+@Setter
+@EqualsAndHashCode(callSuper = true, exclude = {"players"})
 @ToString(callSuper = true)
 public class Room extends BaseEntity {
 
@@ -22,17 +26,10 @@ public class Room extends BaseEntity {
     @Column(name = "room_name")
     private String roomName;
 
-    @Transient
+    @Column(name = "capacity" , nullable = false)
     private int capacity;
 
-    @Transient
-    private Set<Player> participants;
+    @OneToMany(targetEntity = Player.class, mappedBy = "room")
+    private Set<Player> players;
 
-    public String getRoomName() {
-        return roomName;
-    }
-
-    public void setRoomName(String roomName) {
-        this.roomName = roomName;
-    }
 }

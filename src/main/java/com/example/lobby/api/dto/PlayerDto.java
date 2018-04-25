@@ -17,5 +17,6 @@ public class PlayerDto extends  BaseDto {
     private String username;
     private String email;
     private Long rank;
+    private Long roomId;
 
 }

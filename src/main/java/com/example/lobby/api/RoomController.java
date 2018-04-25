@@ -2,9 +2,11 @@ package com.example.lobby.api;
 
 
 import com.example.lobby.api.dto.RoomDto;
+import com.example.lobby.domain.Player;
 import com.example.lobby.domain.Room;
 import com.example.lobby.labels.messages.ApiResponseMessages;
 import com.example.lobby.mapper.RoomMapper;
+import com.example.lobby.service.PlayerService;
 import com.example.lobby.service.RoomService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -31,6 +33,7 @@ public class RoomController {
 
     private final RoomMapper roomMapper;
     private final RoomService roomService;
+    private final PlayerService playerService;
 
 
     @GetMapping()
@@ -114,7 +117,7 @@ public class RoomController {
         roomService.delete(roomId);
     }
 
-    @PostMapping("/{roomId}/player/{playerId}")
+    @PutMapping("/{roomId}/addPlayer/{playerId}")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(
             nickname = "deleteRoom",
@@ -128,6 +131,38 @@ public class RoomController {
     })
     public void addPlayerToRoom(@Valid @PathVariable Long roomId , @Valid @PathVariable Long playerId  ) {
 
+        Player player = playerService.getPlayer(playerId);
+        Room room = roomService.getRoom(roomId);
+        if (player != null && room!=null){
+            playerService.addPlayerToRoom(player , room);
+        }else{
+            throw new IllegalArgumentException("Player or room is null");
+        }
+
+
+    }
+
+    @PostMapping("/{roomId}/removePlayer/{playerId}")
+    @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(
+            nickname = "deleteRoom",
+            value = "delete player from the room",
+            notes = "delete player from the room",
+            response = RoomDto.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = HttpURLConnection.HTTP_NO_CONTENT, message = ApiResponseMessages.OK),
+            @ApiResponse(code = HttpURLConnection.HTTP_NOT_FOUND, message = ApiResponseMessages.NOT_FOUND),
+            @ApiResponse(code = HttpURLConnection.HTTP_INTERNAL_ERROR, message = ApiResponseMessages.INTERNAL_SERVER_ERROR)
+    })
+    public void removePlayerFromRoom(@Valid @PathVariable Long roomId , @Valid @PathVariable Long playerId  ) {
+
+        Player player = playerService.getPlayer(playerId);
+        Room room = roomService.getRoom(roomId);
+        if (player != null && room!=null){
+            playerService.removePlayerFromRoom(player , room);
+        }else{
+            throw new IllegalArgumentException("Player or room is null");
+        }
 
 
     }

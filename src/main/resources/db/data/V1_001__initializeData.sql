@@ -21,13 +21,13 @@ INSERT INTO player(
 
 
 INSERT INTO room(
-            id, room_name)
-    VALUES (nextval('id_seq'), 'DefaultRoom1');
+            id, room_name, capacity)
+    VALUES (nextval('id_seq'), 'DefaultRoom1' ,4);
 
 INSERT INTO room(
-            id, room_name)
-    VALUES (nextval('id_seq'), 'DefaultRoom2');
+            id, room_name, capacity)
+    VALUES (nextval('id_seq'), 'DefaultRoom2', 4);
 
 INSERT INTO room(
-            id, room_name)
-    VALUES (nextval('id_seq'), 'DefaultRoom2');
+            id, room_name, capacity)
+    VALUES (nextval('id_seq'), 'DefaultRoom2', 4);

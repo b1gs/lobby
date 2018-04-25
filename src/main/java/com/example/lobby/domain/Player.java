@@ -1,17 +1,17 @@
 package com.example.lobby.domain;
 
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "player")
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true, exclude = {"room"})
 @ToString(callSuper = true)
 public class Player extends BaseEntity {
 
@@ -21,5 +21,9 @@ public class Player extends BaseEntity {
 
     @Column(name = "email" , nullable = false , unique = true)
     private String email;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "room_id", columnDefinition = "int8", nullable = true)
+    private Room room;
 
 }

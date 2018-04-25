@@ -1,10 +1,10 @@
-package com.example.lobby.web;
+package com.example.lobby.api;
 
 import com.example.lobby.domain.ChatMessage;
 import com.example.lobby.domain.SessionProfanity;
 import com.example.lobby.event.LoginEvent;
-import com.example.lobby.repo.ParticipantRepository;
 import com.example.lobby.exception.TooMuchProfanityException;
+import com.example.lobby.repo.ParticipantRepository;
 import com.example.lobby.util.ProfanityChecker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;

@@ -1,6 +1,7 @@
 package com.example.lobby.service.impl;
 
 import com.example.lobby.domain.Player;
+import com.example.lobby.domain.Room;
 import com.example.lobby.repo.PlayersRepository;
 import com.example.lobby.service.PlayerService;
 import lombok.RequiredArgsConstructor;
@@ -44,4 +45,24 @@ public class PlayerServiceImpl  implements PlayerService {
         playersRepository.delete(playersRepository.getOne(id));
     }
 
+    @Override
+    public void addPlayerToRoom(Player player, Room room) {
+        if(room.getPlayers()!=null && room.getPlayers().size() < room.getCapacity()){
+            player.setRoom(room);
+            playersRepository.save(player);
+        }else {
+            throw new IllegalArgumentException("The Room(id="+room.getId()+") is FULL");
+        }
+
+    }
+
+    @Override
+    public void removePlayerFromRoom(Player player, Room room) {
+        if (room.getPlayers().contains(player)){
+            player.setRoom(null);
+            playersRepository.save(player);
+        }else {
+            throw new IllegalArgumentException("Pleyer(id="+player.getId() +  " is not belong to the Room(id="+room.getId() + ")");
+        }
+    }
 }

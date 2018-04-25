@@ -1,6 +1,7 @@
 package com.example.lobby.service.impl;
 
 import com.example.lobby.domain.Room;
+import com.example.lobby.repo.PlayersRepository;
 import com.example.lobby.repo.RoomRepository;
 import com.example.lobby.service.RoomService;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,7 @@ import java.util.List;
 public class RoomServiceImpl implements RoomService {
 
     private final RoomRepository roomRepository;
+    private final PlayersRepository playersRepository;
 
     @Override
     public List<Room> getAllRooms() {

@@ -1,8 +1,6 @@
 package com.example.lobby.api.dto;
 
 
-import com.example.lobby.domain.Player;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
@@ -29,9 +27,10 @@ public class RoomDto extends BaseDto {
     @Size( min = 1 , max = 30 )
     private String roomName;
 
+    @NotNull
+    private int capacity;
 
-    @JsonIgnore
-    private Set<Player> players = new HashSet<>(6);
+    private Set<PlayerDto> players = new HashSet<>(6);
 
 
 }
