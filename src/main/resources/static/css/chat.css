@@ -13,3 +13,11 @@
 	height:400px;
 	overflow: auto;
 }
+
+.roomList {
+	color: #000;
+}
+
+.roomList:hover {
+	background-color: #7b8996;
+}

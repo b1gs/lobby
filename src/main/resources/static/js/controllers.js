@@ -4,7 +4,10 @@
 
 angular.module('springChat.controllers', ['toaster'])
 	.controller('ChatController', ['$scope', '$location', '$interval', 'toaster', 'ChatSocket', function($scope, $location, $interval, toaster, chatSocket) {
-		  
+
+        var params = (new URL(document.location)).searchParams;
+        var roomId = params.get("roomId");
+        console.log('RoomId is = ' + roomId);
 		var typing = undefined;
 		
 		$scope.username     = '';

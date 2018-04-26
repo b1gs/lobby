@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="springChat">
+	<head>
+	  <meta charset="utf-8" />
+	  <title>Spring WebSocket Chat</title>
+	  
+	  <!-- Loading Bootstrap -->
+	  <link href="lib/flat-ui/dist/css/vendor/bootstrap.min.css" rel="stylesheet">
+	
+	  <!-- Loading Flat UI -->
+	  <link href="lib/flat-ui/dist/css/flat-ui.css" rel="stylesheet">
+	  
+	  <link href="css/chat.css" rel="stylesheet">	  
+	</head>
+	<body>
+		<div class="container">
+	        <div class="login">
+		        <div class="login-screen">
+		          <div class="login-icon">
+		            <h4>Welcome to <small>Spring WebSocket Chat</small></h4>
+		          </div>
+		
+		          <div class="login-form">
+		          	<div id="anchor" >
+					</div>
+		          </div>
+		        </div>
+		      </div>
+	    </div>
+	    <!-- /.container -->
+
+		<script src="js/lobby.js"></script>
+
+		<script>
+            httpGet('http://localhost:7788/v1/room');
+		</script>
+		
+	</body>
+</html>

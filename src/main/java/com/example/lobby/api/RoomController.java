@@ -6,6 +6,7 @@ import com.example.lobby.domain.Player;
 import com.example.lobby.domain.Room;
 import com.example.lobby.labels.messages.ApiResponseMessages;
 import com.example.lobby.mapper.RoomMapper;
+import com.example.lobby.security.PlayerDetails;
 import com.example.lobby.service.PlayerService;
 import com.example.lobby.service.RoomService;
 import io.swagger.annotations.Api;
@@ -17,6 +18,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -117,7 +120,7 @@ public class RoomController {
         roomService.delete(roomId);
     }
 
-    @PutMapping("/{roomId}/addPlayer/{playerId}")
+    @PutMapping("/{roomId}/addPlayer")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(
             nickname = "deleteRoom",
@@ -129,9 +132,11 @@ public class RoomController {
             @ApiResponse(code = HttpURLConnection.HTTP_NOT_FOUND, message = ApiResponseMessages.NOT_FOUND),
             @ApiResponse(code = HttpURLConnection.HTTP_INTERNAL_ERROR, message = ApiResponseMessages.INTERNAL_SERVER_ERROR)
     })
-    public void addPlayerToRoom(@Valid @PathVariable Long roomId , @Valid @PathVariable Long playerId  ) {
+    public void addPlayerToRoom(@Valid @PathVariable Long roomId ) {
 
-        Player player = playerService.getPlayer(playerId);
+        Object details = ((UsernamePasswordAuthenticationToken)SecurityContextHolder.getContext().getAuthentication()).getDetails();
+
+        Player player = playerService.getPlayer(((PlayerDetails)details).getId());
         Room room = roomService.getRoom(roomId);
         if (player != null && room!=null){
             playerService.addPlayerToRoom(player , room);

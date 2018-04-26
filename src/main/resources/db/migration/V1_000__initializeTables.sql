@@ -8,6 +8,7 @@ CREATE TABLE player (
   email character varying(255),
   rank INTEGER,
   room_id INTEGER,
+  password CHARACTER VARYING(32) not null,
   creation_date timestamp with time zone,
   last_login timestamp with time zone,
   CONSTRAINT "player_pk" PRIMARY KEY (id)

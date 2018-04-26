@@ -40,8 +40,8 @@ public class ChatController {
         return participantRepository.getActiveSessions().values();
     }
 
-    @MessageMapping("/chat.message")
-    public ChatMessage filterMessage(@Payload ChatMessage message, Principal principal) {
+    @MessageMapping("/chat.message/{roomId}")
+    public ChatMessage filterMessage(@Payload ChatMessage message, Principal principal, @DestinationVariable String roomId ) {
         checkProfanityAndSanitize(message);
 
         message.setUsername(principal.getName());

@@ -22,6 +22,9 @@ public class Player extends BaseEntity {
     @Column(name = "email" , nullable = false , unique = true)
     private String email;
 
+    @Column(name = "password" , nullable = false )
+    private String password;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "room_id", columnDefinition = "int8", nullable = true)
     private Room room;
