@@ -7,10 +7,7 @@ import com.example.lobby.exception.TooMuchProfanityException;
 import com.example.lobby.repo.ParticipantRepository;
 import com.example.lobby.util.ProfanityChecker;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.handler.annotation.DestinationVariable;
-import org.springframework.messaging.handler.annotation.MessageExceptionHandler;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.handler.annotation.*;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.messaging.simp.annotation.SubscribeMapping;
@@ -35,15 +32,16 @@ public class ChatController {
     @Autowired private SimpMessagingTemplate simpMessagingTemplate;
 
 
-    @SubscribeMapping("/chat.participants")
+    @SubscribeMapping("{roomId}/chat.participants")
     public Collection<LoginEvent> retrieveParticipants() {
         return participantRepository.getActiveSessions().values();
     }
 
-    @MessageMapping("/chat.message/{roomId}")
+    @MessageMapping("{roomId}/chat.message/")
+    @SendTo("topic/{roomId}/chat.message/")
     public ChatMessage filterMessage(@Payload ChatMessage message, Principal principal, @DestinationVariable String roomId ) {
         checkProfanityAndSanitize(message);
-
+        System.out.println("RoomId= " + roomId);
         message.setUsername(principal.getName());
 
         return message;

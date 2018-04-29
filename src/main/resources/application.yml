@@ -41,5 +41,5 @@ management:
 chat:
   max-profanity-level: 5
   disallowed-words: damn, crap, ass
-  destinations.login: /topic/chat.login
-  chat.destinations.logout: /topic/chat.logout
+  destinations.login: /chat.login
+  chat.destinations.logout: /chat.logout

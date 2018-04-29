@@ -17,13 +17,13 @@ angular.module('springChat.controllers', ['toaster'])
 		$scope.newMessage   = ''; 
 		  
 		$scope.sendMessage = function() {
-			var destination = "/app/chat.message";
+			var destination = "/app/" + roomId + "/chat.message/";
 			
 			if($scope.sendTo != "everyone") {
 				destination = "/app/chat.private." + $scope.sendTo;
 				$scope.messages.unshift({message: $scope.newMessage, username: 'you', priv: true, to: $scope.sendTo});
 			}
-			
+			console.log("Sending Message to destination:  " + destination)
 			chatSocket.send(destination, {}, JSON.stringify({message: $scope.newMessage}));
 			$scope.newMessage = '';
 		};
@@ -36,7 +36,7 @@ angular.module('springChat.controllers', ['toaster'])
 	                $scope.stopTyping();
 	            }, 500);
 	        
-	        chatSocket.send("/topic/chat.typing", {}, JSON.stringify({username: $scope.username, typing: true}));
+	        chatSocket.send("/topic/" + roomId + "/chat.typing", {}, JSON.stringify({username: $scope.username, typing: true}));
 		};
 		
 		$scope.stopTyping = function() {
@@ -44,7 +44,7 @@ angular.module('springChat.controllers', ['toaster'])
 		        $interval.cancel(typing);
 		        typing = undefined;
 		        
-		        chatSocket.send("/topic/chat.typing", {}, JSON.stringify({username: $scope.username, typing: false}));
+		        chatSocket.send("/topic/" + roomId + "/chat.typing", {}, JSON.stringify({username: $scope.username, typing: false}));
 			}
 		};
 		
@@ -59,15 +59,15 @@ angular.module('springChat.controllers', ['toaster'])
 				  
 				$scope.username = frame.headers['user-name'];
 
-				chatSocket.subscribe("/app/chat.participants", function(message) {
+				chatSocket.subscribe("/app/"+roomId+"/chat.participants", function(message) {
 					$scope.participants = JSON.parse(message.body);
 				});
 				  
-				chatSocket.subscribe("/topic/chat.login", function(message) {
+				chatSocket.subscribe("/topic/"+roomId+"/chat.login", function(message) {
 					$scope.participants.unshift({username: JSON.parse(message.body).username, typing : false});
 				});
 		        	 
-				chatSocket.subscribe("/topic/chat.logout", function(message) {
+				chatSocket.subscribe("/topic/"+roomId+"/chat.logout", function(message) {
 					var username = JSON.parse(message.body).username;
 					for(var index in $scope.participants) {
 						if($scope.participants[index].username == username) {
@@ -76,7 +76,7 @@ angular.module('springChat.controllers', ['toaster'])
 					}
 		        });
 		        	 
-				chatSocket.subscribe("/topic/chat.typing", function(message) {
+				chatSocket.subscribe("/topic/"+roomId+"/chat.typing", function(message) {
 					var parsed = JSON.parse(message.body);
 					if(parsed.username == $scope.username) return;
 				  					
@@ -89,7 +89,7 @@ angular.module('springChat.controllers', ['toaster'])
 				  	} 
 				});
 		        	 
-				chatSocket.subscribe("/topic/chat.message", function(message) {
+				chatSocket.subscribe("/topic/"+roomId+"/chat.message", function(message) {
 					$scope.messages.unshift(JSON.parse(message.body));
 		        });
 				  

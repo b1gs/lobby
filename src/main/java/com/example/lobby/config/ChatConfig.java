@@ -3,6 +3,7 @@ package com.example.lobby.config;
 import com.example.lobby.domain.SessionProfanity;
 import com.example.lobby.event.PresenceEventListener;
 import com.example.lobby.repo.ParticipantRepository;
+import com.example.lobby.repo.PlayersRepository;
 import com.example.lobby.util.ProfanityChecker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -24,8 +25,8 @@ public class ChatConfig {
 
     @Bean
     @Description("Tracks user presence (join / leave) and broacasts it to all connected users")
-    public PresenceEventListener presenceEventListener(SimpMessagingTemplate messagingTemplate) {
-        PresenceEventListener presence = new PresenceEventListener(messagingTemplate, participantRepository());
+    public PresenceEventListener presenceEventListener(SimpMessagingTemplate messagingTemplate, PlayersRepository playersRepository) {
+        PresenceEventListener presence = new PresenceEventListener(messagingTemplate, participantRepository(),playersRepository);
         presence.setLoginDestination(chatProperties.getDestinations().getLogin());
         presence.setLogoutDestination(chatProperties.getDestinations().getLogout());
         return presence;
