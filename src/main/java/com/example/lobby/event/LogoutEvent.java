@@ -3,8 +3,9 @@ package com.example.lobby.event;
 public class LogoutEvent {
 
     private String username;
+    private Long roomId;
 
-    public LogoutEvent(String username) {
+    public LogoutEvent(String username, Long roomId ) {
         this.username = username;
     }
 
@@ -16,4 +17,11 @@ public class LogoutEvent {
         this.username = username;
     }
 
+    public Long getRoomId() {
+        return roomId;
+    }
+
+    public void setRoomId(Long roomId) {
+        this.roomId = roomId;
+    }
 }

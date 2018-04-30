@@ -45,27 +45,22 @@ public class PresenceEventListener {
             LOGGER.error("Room is null!!! Check THIS OUT! It must be not null" );
         }
 
-        LoginEvent loginEvent = new LoginEvent(username);
+        LoginEvent loginEvent = new LoginEvent(username,player.getRoom().getId() );
 
-        messagingTemplate.convertAndSend(TOPIC+ player.getRoom().getId()+loginDestination, loginEvent);
+        messagingTemplate.convertAndSend(TOPIC + player.getRoom().getId()+loginDestination, loginEvent);
 
         // We store the session as we need to be idempotent in the disconnect event processing
-        participantRepository.add(headers.getSessionId(), loginEvent, player.getRoom().getId());
+        participantRepository.add(headers.getSessionId(), loginEvent
+        );
     }
 
     @EventListener
     private void handleSessionDisconnect(SessionDisconnectEvent event) {
-        SimpMessageHeaderAccessor headers = SimpMessageHeaderAccessor.wrap(event.getMessage());
-        String username = headers.getUser().getName();
-
-        Player player = playersRepository.getPlayerByUsername(username);
-        if (player.getRoom() == null ){
-            LOGGER.error("Room is null!!! Check THIS OUT! It must be not null" );
-        }
+        removePlayerFromRoom(event);
         Optional.ofNullable(participantRepository.getParticipant(event.getSessionId()))
                 .ifPresent(login -> {
-                    messagingTemplate.convertAndSend(TOPIC+logoutDestination, new LogoutEvent(login.getUsername()));
-                    participantRepository.removeParticipant(event.getSessionId(), player.getRoom().getId());
+                    messagingTemplate.convertAndSend(TOPIC+logoutDestination, new LogoutEvent(login.getUsername(),login.getRoomId()));
+                    participantRepository.removeParticipant(event.getSessionId());
                 });
     }
 
@@ -77,4 +72,10 @@ public class PresenceEventListener {
         this.logoutDestination = logoutDestination;
     }
 
+    private void removePlayerFromRoom(SessionDisconnectEvent event){
+        LoginEvent participant = participantRepository.getParticipant(event.getSessionId());
+        Player player = playersRepository.getPlayerByUsername(participant.getUsername());
+        player.setRoom(null);
+        playersRepository.save(player);
+    }
 }

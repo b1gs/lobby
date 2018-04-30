@@ -51,7 +51,17 @@ angular.module('springChat.controllers', ['toaster'])
 		$scope.privateSending = function(username) {
 				$scope.sendTo = (username != $scope.sendTo) ? username : 'everyone';
 		};
-			
+
+        $scope.disconnect = function () {
+        	var redirectLink = "http://localhost:7788/lobby.html";
+            if (chatSocket !== null) {
+                chatSocket.disconnect();
+            }
+            console.log("Disconnected. Redirecting to " + redirectLink);
+            window.location.replace(redirectLink);
+        };
+
+
 		var initStompClient = function() {
 			chatSocket.init('/ws');
 			
@@ -108,7 +118,5 @@ angular.module('springChat.controllers', ['toaster'])
 				
 		    });
 		};
-		  
 		initStompClient();
 	}]);
-	

@@ -6,9 +6,11 @@ public class LoginEvent {
 
     private String username;
     private Date time;
+    private Long roomId;
 
-    public LoginEvent(String username) {
+    public LoginEvent(String username, Long roomId) {
         this.username = username;
+        this.roomId = roomId;
         time = new Date();
     }
 
@@ -28,4 +30,11 @@ public class LoginEvent {
         this.time = time;
     }
 
+    public Long getRoomId() {
+        return roomId;
+    }
+
+    public void setRoomId(Long roomId) {
+        this.roomId = roomId;
+    }
 }

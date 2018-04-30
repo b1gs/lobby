@@ -9,6 +9,7 @@ CREATE TABLE player (
   rank INTEGER,
   room_id INTEGER,
   password CHARACTER VARYING(32) not null,
+  is_ready boolean NOT NULL DEFAULT false,
   creation_date timestamp with time zone,
   last_login timestamp with time zone,
   CONSTRAINT "player_pk" PRIMARY KEY (id)

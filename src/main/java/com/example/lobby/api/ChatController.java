@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 
 import java.security.Principal;
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 /**
  * Created by ovolkovskyi on 24.01.2018.
@@ -33,12 +34,13 @@ public class ChatController {
 
 
     @SubscribeMapping("{roomId}/chat.participants")
-    public Collection<LoginEvent> retrieveParticipants() {
-        return participantRepository.getActiveSessions().values();
+    public Collection<LoginEvent> retrieveParticipants(@DestinationVariable Long roomId) {
+        Collection<LoginEvent> participants = participantRepository.getActiveSessions().values();
+        return participants.stream().filter(participant ->participant.getRoomId().equals(roomId)).collect(Collectors.toList());
     }
 
     @MessageMapping("{roomId}/chat.message/")
-    @SendTo("topic/{roomId}/chat.message/")
+    @SendTo("/topic/{roomId}/chat.message")
     public ChatMessage filterMessage(@Payload ChatMessage message, Principal principal, @DestinationVariable String roomId ) {
         checkProfanityAndSanitize(message);
         System.out.println("RoomId= " + roomId);
