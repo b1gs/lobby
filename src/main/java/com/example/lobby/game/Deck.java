@@ -1,37 +1,17 @@
 package com.example.lobby.game;
 
+import com.example.lobby.enums.Rank;
+import com.example.lobby.enums.Suit;
+
 import java.util.ArrayList;
 
 public class Deck {
 
     private ArrayList<Card> cardDeck = new ArrayList<>(52);
 
-    enum Suits {
-        CLUBS,
-        DIAMONDS,
-        HEARTS,
-        SPADES
-    }
-
-    enum Ranks{
-        ACE,
-        TWO,
-        THREE,
-        FOUR,
-        FIVE,
-        SIX,
-        SEVEN,
-        EIGHT,
-        NINE,
-        TEN,
-        JACK,
-        QUEEN,
-        KING
-    }
-
     public Deck(){
-        for (Ranks rank : Ranks.values()) {
-            for (Suits suit : Suits.values() ) {
+        for (Rank rank : Rank.values()) {
+            for (Suit suit : Suit.values() ) {
                 Card card = new Card(suit,rank);
                 cardDeck.add(card);
             }
@@ -44,8 +24,12 @@ public class Deck {
             cardDeck.add(i, temp);
         }
         for(Card card : cardDeck){
-            System.out.println(card.getRank() + "    " + card.getSuit());
+            System.out.println( card.getRank() + "    " + card.getSuit() );
         }
     }
 
+
+    public ArrayList<Card> getCardDeck() {
+        return cardDeck;
+    }
 }
