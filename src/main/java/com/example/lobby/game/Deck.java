@@ -3,25 +3,26 @@ package com.example.lobby.game;
 import com.example.lobby.enums.Rank;
 import com.example.lobby.enums.Suit;
 
-import java.util.ArrayList;
-
 public class Deck {
 
-    private ArrayList<Card> cardDeck = new ArrayList<>(52);
+    private Card [] cardDeck = new Card[52];
+
+    private int numberOfCardsLeft = 52;
 
     public Deck(){
-        for (Rank rank : Rank.values()) {
-            for (Suit suit : Suit.values() ) {
-                Card card = new Card(suit,rank);
-                cardDeck.add(card);
+        int ctr =0;
+        for (Suit suit : Suit.values() ) {
+            for (Rank rank : Rank.values()) {
+                Card card = new Card(rank, suit);
+                cardDeck[ctr++]= card;
             }
         }
 
         for (int i = 0; i < 52; i++) {
             int r = i + (int) (Math.random() * (52-i));
-            Card temp = cardDeck.get(r);
-            cardDeck.add(r, cardDeck.get(i));
-            cardDeck.add(i, temp);
+            Card temp = cardDeck[r];
+            cardDeck[r] = cardDeck[i];
+            cardDeck[i] = temp;
         }
         for(Card card : cardDeck){
             System.out.println( card.getRank() + "    " + card.getSuit() );
@@ -29,7 +30,11 @@ public class Deck {
     }
 
 
-    public ArrayList<Card> getCardDeck() {
-        return cardDeck;
+    public Card getNext(){
+       return cardDeck[--numberOfCardsLeft];
+    }
+
+    public boolean hasNext(){
+        return numberOfCardsLeft > 0 ;
     }
 }
