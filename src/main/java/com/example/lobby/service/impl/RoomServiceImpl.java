@@ -6,11 +6,13 @@ import com.example.lobby.repo.RoomRepository;
 import com.example.lobby.service.RoomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Component
 @RequiredArgsConstructor
+@Transactional
 public class RoomServiceImpl implements RoomService {
 
     private final RoomRepository roomRepository;

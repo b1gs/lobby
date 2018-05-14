@@ -11,6 +11,8 @@ public interface PlayerService {
 
     Player getPlayer(Long id);
 
+    Player getPlayerByUsername(String username);
+
     Player create(Player player);
 
     Player update(Long id , Player player);

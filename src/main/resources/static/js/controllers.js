@@ -61,6 +61,14 @@ angular.module('springChat.controllers', ['toaster'])
             window.location.replace(redirectLink);
         };
 
+        $scope.startGame = function () {
+            var destination = "/app/" + roomId + "/startGame";
+
+            console.log("Sending Message to destination:  " + destination)
+            chatSocket.send(destination, {}, JSON.stringify({ "123" : 123 }));
+            $scope.newMessage = '';
+        };
+
 
 		var initStompClient = function() {
 			chatSocket.init('/ws');
@@ -102,6 +110,10 @@ angular.module('springChat.controllers', ['toaster'])
 				chatSocket.subscribe("/topic/"+roomId+"/chat.message", function(message) {
 					$scope.messages.unshift(JSON.parse(message.body));
 		        });
+
+                chatSocket.subscribe("/topic/"+roomId+"/game.turn.message", function(message) {
+                    $scope.messages.unshift(JSON.parse(message.body));
+                });
 				  
 				chatSocket.subscribe("/user/exchange/amq.direct/chat.message", function(message) {
 					var parsed = JSON.parse(message.body);

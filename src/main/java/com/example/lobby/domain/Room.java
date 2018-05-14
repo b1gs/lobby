@@ -29,6 +29,9 @@ public class Room extends BaseEntity {
     @Column(name = "capacity" , nullable = false)
     private int capacity;
 
+    @Column(name = "owner", nullable = false)
+    private Player owner;
+
     @OneToMany(targetEntity = Player.class, mappedBy = "room")
     private Set<Player> players;
 

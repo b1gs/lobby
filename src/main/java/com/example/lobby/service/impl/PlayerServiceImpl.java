@@ -26,6 +26,11 @@ public class PlayerServiceImpl  implements PlayerService {
     }
 
     @Override
+    public Player getPlayerByUsername(String username) {
+        return playersRepository.getPlayerByUsername(username);
+    }
+
+    @Override
     public Player create(Player player) {
         return playersRepository.save(player);
     }
@@ -47,6 +52,9 @@ public class PlayerServiceImpl  implements PlayerService {
 
     @Override
     public void addPlayerToRoom(Player player, Room room) {
+        if (room.getPlayers()!=null && room.getPlayers().size()==0){
+            room.setOwner(player);
+        }
         if(room.getPlayers()!=null && room.getPlayers().size() < room.getCapacity()){
             player.setRoom(room);
             playersRepository.save(player);

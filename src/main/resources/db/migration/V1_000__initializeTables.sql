@@ -19,6 +19,7 @@ CREATE TABLE room (
   id bigint NOT NULL,
   room_name CHARACTER VARYING(255) NOT NULL,
   capacity INTEGER NOT NULL,
+  owner bigint,
   CONSTRAINT "room_pk" PRIMARY KEY (id)
 );
 

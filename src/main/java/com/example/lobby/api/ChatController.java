@@ -6,7 +6,7 @@ import com.example.lobby.event.LoginEvent;
 import com.example.lobby.exception.TooMuchProfanityException;
 import com.example.lobby.repo.ParticipantRepository;
 import com.example.lobby.util.ProfanityChecker;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.*;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.annotation.SendToUser;
@@ -21,16 +21,13 @@ import java.util.stream.Collectors;
  * Created by ovolkovskyi on 24.01.2018.
  */
 @Controller
+@RequiredArgsConstructor
 public class ChatController {
 
-    @Autowired
-    private ProfanityChecker profanityFilter;
-
-    @Autowired private SessionProfanity profanity;
-
-    @Autowired private ParticipantRepository participantRepository;
-
-    @Autowired private SimpMessagingTemplate simpMessagingTemplate;
+    private final ProfanityChecker profanityFilter;
+    private final SessionProfanity profanity;
+    private final ParticipantRepository participantRepository;
+    private final SimpMessagingTemplate simpMessagingTemplate;
 
 
     @SubscribeMapping("{roomId}/chat.participants")

@@ -1,6 +1,7 @@
 package com.example.lobby.domain;
 
 
+import com.example.lobby.enums.GameState;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,7 +23,7 @@ public class Game extends BaseEntity{
     private Date creationDate;
 
     @Column(name = "game_status")
-    private String gameStatus;
+    private GameState gameStatus;
 
 
     @Column(name = "game_type")

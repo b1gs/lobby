@@ -1,6 +1,5 @@
 package com.example.lobby.domain;
 
-import com.example.lobby.game.Card;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,7 +13,7 @@ import java.util.Set;
 @Entity
 @Table(name = "player")
 @EqualsAndHashCode(callSuper = true, exclude = {"room", "playerCards"})
-@ToString(callSuper = true)
+@ToString(callSuper = true, exclude = {"room", "playerCards"} )
 public class Player extends BaseEntity {
 
 
