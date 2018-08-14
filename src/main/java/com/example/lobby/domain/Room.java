@@ -7,10 +7,7 @@ import lombok.ToString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Set;
 
 @Entity
@@ -29,7 +26,8 @@ public class Room extends BaseEntity {
     @Column(name = "capacity" , nullable = false)
     private int capacity;
 
-    @Column(name = "owner", nullable = false)
+    @OneToOne
+    @JoinColumn(name="owner")
     private Player owner;
 
     @OneToMany(targetEntity = Player.class, mappedBy = "room")

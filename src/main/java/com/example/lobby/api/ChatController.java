@@ -1,9 +1,9 @@
 package com.example.lobby.api;
 
-import com.example.lobby.domain.ChatMessage;
 import com.example.lobby.domain.SessionProfanity;
 import com.example.lobby.event.LoginEvent;
 import com.example.lobby.exception.TooMuchProfanityException;
+import com.example.lobby.messaging.ChatMessage;
 import com.example.lobby.repo.ParticipantRepository;
 import com.example.lobby.util.ProfanityChecker;
 import lombok.RequiredArgsConstructor;

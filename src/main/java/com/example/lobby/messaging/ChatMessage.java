@@ -1,4 +1,4 @@
-package com.example.lobby.domain;
+package com.example.lobby.messaging;
 
 public class ChatMessage {
 

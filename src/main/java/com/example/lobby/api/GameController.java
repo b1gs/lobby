@@ -1,17 +1,17 @@
 package com.example.lobby.api;
 
-import com.example.lobby.domain.ChatMessage;
 import com.example.lobby.domain.Player;
 import com.example.lobby.domain.Room;
-import com.example.lobby.service.CardService;
-import com.example.lobby.service.PlayerService;
-import com.example.lobby.service.RoomService;
+import com.example.lobby.messaging.ChatMessage;
+import com.example.lobby.messaging.TurnMessage;
+import com.example.lobby.service.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
@@ -22,12 +22,13 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class GameController {
 
-
-    private final PlayerService playerService;
-    private final RoomService roomService;
-    private final CardService cardService;
     private final SimpMessagingTemplate simpMessagingTemplate;
     private final ObjectMapper objectMapper;
+    private final RoomService roomService;
+    private final CardService cardService;
+    private final TurnService turnService;
+    private final PlayerService playerService;
+    private final GameService gameService;
 
     @MessageMapping("{roomId}/startGame")
     public void startGame(@Payload ChatMessage message, Principal principal, @DestinationVariable Long roomId ) throws JsonProcessingException {
@@ -41,10 +42,21 @@ public class GameController {
             }
         }
         Set<Player> players = cardService.handOverCards(room.getPlayers());
+        gameService.create(players.iterator().next(), room);
         for (Player p : players ){
             message.setMessage(objectMapper.writeValueAsString(p.getPlayerCards()));
             simpMessagingTemplate.convertAndSend("/user/" + p.getUsername() + "/exchange/amq.direct/chat.message", message);
         }
+    }
+
+    @MessageMapping("{roomId}/turn")
+    @SendTo("topic/{roomId}/turn")
+    public void turn(@DestinationVariable Long roomId, @Payload TurnMessage message, Principal principal){
+//        if (turnService.isPlayerTurn(playerService.getPlayerByUsername(principal.getName()).isReady())){
+//            turnService.makeTurn(message);
+//        }else{
+//            throw new IllegalArgumentException("It is not you turn now!! Player: " + principal.getName());
+//        }
     }
 
 }
