@@ -15,6 +15,7 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
+import javax.transaction.Transactional;
 import java.security.Principal;
 import java.util.Set;
 
@@ -31,6 +32,7 @@ public class GameController {
     private final GameService gameService;
 
     @MessageMapping("{roomId}/startGame")
+    @Transactional
     public void startGame(@Payload ChatMessage message, Principal principal, @DestinationVariable Long roomId ) throws JsonProcessingException {
         Room room = roomService.getRoom(roomId);
         if (!principal.getName().equals(room.getOwner().getUsername())){
@@ -44,6 +46,7 @@ public class GameController {
         Set<Player> players = cardService.handOverCards(room.getPlayers());
         gameService.create(players.iterator().next(), room);
         for (Player p : players ){
+            message.setUsername("CARDS_MESSAGE");
             message.setMessage(objectMapper.writeValueAsString(p.getPlayerCards()));
             simpMessagingTemplate.convertAndSend("/user/" + p.getUsername() + "/exchange/amq.direct/chat.message", message);
         }

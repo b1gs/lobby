@@ -9,7 +9,8 @@
 	  <link href="lib/flat-ui/dist/css/flat-ui.css" rel="stylesheet">
 	  <link href="lib/angularjs-toaster/toaster.css" rel="stylesheet">
       
-	  <link href="css/chat.css" rel="stylesheet">	  
+	  <link href="css/chat.css" rel="stylesheet">
+		<link href="css/cards.css" rel="stylesheet">
 	</head>
 	<body>
 		
@@ -56,6 +57,13 @@
         	</div>
 			<input class="btn btn-primary btn-lg btn-block" ng-click="startGame()" type="button" value="Start Game"/>
 	    </div>
+
+		<div class="playingCards" id="playingCards">
+			<div class="card rank-7 spades">
+				<span class="rank">7</span>
+				<span class="suit">&spades;</span>
+			</div>
+		</div>
 	    <!-- /.container -->
 		<!-- 3rd party -->
 		<script src="lib/angular/angular.min.js"></script>
