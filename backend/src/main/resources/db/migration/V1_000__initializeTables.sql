@@ -52,21 +52,29 @@ CREATE TABLE move (
       ON UPDATE NO ACTION ON DELETE NO ACTION
 );
 
-CREATE TABLE card (
-  id bigint NOT NULL,
-  rank CHARACTER VARYING (255) NOT NULL,
-  suit CHARACTER VARYING (255) NOT NULL,
-  CONSTRAINT "card_pk" PRIMARY KEY (id)
-);
+-- CREATE TABLE card (
+--   id bigint NOT NULL,
+--   rank CHARACTER VARYING (255) NOT NULL,
+--   suit CHARACTER VARYING (255) NOT NULL,
+--   CONSTRAINT "card_pk" PRIMARY KEY (id)
+-- );
 
 CREATE TABLE player_card (
   player_id bigint NOT NULL ,
-  card_id bigint NOT NULL ,
-  PRIMARY KEY (player_id,card_id),
+  rank CHARACTER VARYING (255) NOT NULL,
+  suit CHARACTER VARYING (255) NOT NULL,
+  PRIMARY KEY (player_id,rank,suit),
   CONSTRAINT fk_player FOREIGN KEY (player_id)
-      REFERENCES lobby.player (id) MATCH SIMPLE,
-  CONSTRAINT fk_card FOREIGN KEY (card_id)
-      REFERENCES lobby.card (id) MATCH SIMPLE
+      REFERENCES lobby.player (id) MATCH SIMPLE
+);
+
+CREATE TABLE game_bank_card (
+  game_id bigint NOT NULL ,
+  rank CHARACTER VARYING (255) NOT NULL,
+  suit CHARACTER VARYING (255) NOT NULL,
+  PRIMARY KEY (game_id,rank,suit),
+  CONSTRAINT fk_game FOREIGN KEY (game_id)
+      REFERENCES lobby.game (id) MATCH SIMPLE
 );
 
 CREATE TABLE game_player (

@@ -1,6 +1,7 @@
 package com.example.lobby.service.impl;
 
 import com.example.lobby.domain.Card;
+import com.example.lobby.domain.Deck;
 import com.example.lobby.domain.Player;
 import com.example.lobby.repo.CardRepository;
 import com.example.lobby.service.CardService;
@@ -14,13 +15,7 @@ import java.util.*;
 @RequiredArgsConstructor
 public class CardServiceImpl implements CardService {
 
-    private final CardRepository cardRepository;
-    private List<Card> cardDeck;
-
-    @PostConstruct
-    private void init(){
-        cardDeck = cardRepository.findAll();
-    }
+    private List<Card> cardDeck = Deck.getDeck();
 
     @Override
     public List<Card> getShuffledCards() {

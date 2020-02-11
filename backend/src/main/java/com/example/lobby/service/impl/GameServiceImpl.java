@@ -28,7 +28,7 @@ public class GameServiceImpl implements GameService {
     public Game create(Set<Player> players, Room room) {
         Player firstPlayer = determineFirstPlayer(players);
         Game game = new Game();
-        game.setCurrentPlayerNumber(firstPlayer.getId());
+        game.setCurrentTurnPlayerNumber(firstPlayer.getId());
         game.setRoom(room);
         game.setGameStatus(GameState.IN_PROGRESS);
         game.setTurnNumber(0L);

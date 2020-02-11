@@ -48,7 +48,7 @@ public class GameController {
         Game game = gameService.create(players, room);
         for (Player p : players) {
             message.setUsername("CARDS_MESSAGE");
-            message.setFirstTurnPlayerId(game.getCurrentPlayerNumber());
+            message.setFirstTurnPlayerId(game.getCurrentTurnPlayerNumber());
             message.setMessage(objectMapper.writeValueAsString(p.getPlayerCards()));
             simpMessagingTemplate.convertAndSend("/user/" + p.getUsername() + "/exchange/amq.direct/chat.message", message);
         }

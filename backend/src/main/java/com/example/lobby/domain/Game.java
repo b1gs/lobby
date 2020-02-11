@@ -2,6 +2,7 @@ package com.example.lobby.domain;
 
 
 import com.example.lobby.enums.GameState;
+import com.example.lobby.messaging.TurnMessage;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,19 +19,17 @@ import java.util.*;
 @ToString(callSuper = true)
 public class Game extends BaseEntity {
 
-
     @Column(name = "creation_date", nullable = false)
     private Date creationDate;
 
     @Column(name = "game_status")
     private GameState gameStatus;
 
-
     @Column(name = "game_type")
     private String gameType;
 
     @Column(name = "current_turn_number")
-    private Long currentPlayerNumber;
+    private Long currentTurnPlayerNumber;
 
     @OneToOne
     @JoinColumn(name = "room_id")
@@ -38,6 +37,11 @@ public class Game extends BaseEntity {
 
     @Column(name = "turn_number")
     public Long turnNumber;
+
+    @ManyToMany
+    @JoinTable(name="TABLE_A_B", joinColumns={@JoinColumn(name="ID_A")}, inverseJoinColumns={@JoinColumn(name="ID_B")})
+    @OrderBy(value="orderField")
+    public List<Card> bank;
 
     public boolean isFirstPlayerTurn() {
         return turnNumber > 0;
@@ -50,4 +54,18 @@ public class Game extends BaseEntity {
     @ElementCollection
     @Column(name="player_turn_number")
     private Map<Long, Player> playerTurnMap;
+
+    public Player getCurrentTurnPlayer(){
+        return this.getPlayerTurnMap().get(this.currentTurnPlayerNumber);
+    }
+
+    public void makeTurn(TurnMessage turnMessage) {
+        Set<Card> turnCards = turnMessage.getCards();
+        bank.addAll(turnCards);
+        getCurrentTurnPlayer().getPlayerCards().removeAll(turnCards);
+    }
+
+    public void pickUpCards(TurnMessage turnMessage) {
+        // todo implement pick up logic
+    }
 }
