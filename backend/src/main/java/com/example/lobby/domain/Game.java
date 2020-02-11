@@ -32,9 +32,6 @@ public class Game extends BaseEntity {
     @Column(name = "current_turn_number")
     private Long currentPlayerNumber;
 
-
-    private Map<Long, Player> playerTurnMap;
-
     @OneToOne
     @JoinColumn(name = "room_id")
     private Room room;
@@ -45,4 +42,12 @@ public class Game extends BaseEntity {
     public boolean isFirstPlayerTurn() {
         return turnNumber > 0;
     }
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "game_player",
+            joinColumns = {@JoinColumn(name = "player_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "game_id", referencedColumnName = "id")})
+    @ElementCollection
+    @Column(name="player_turn_number")
+    private Map<Long, Player> playerTurnMap;
 }

@@ -72,7 +72,7 @@ CREATE TABLE player_card (
 CREATE TABLE game_player (
   player_id bigint NOT NULL,
   game_id bigint NOT NULL,
-  playet_turn_number bigint NOT NULL,
+  player_turn_number bigint NOT NULL,
   PRIMARY KEY (player_id,game_id),
   CONSTRAINT fk_player FOREIGN KEY (player_id)
       REFERENCES lobby.player (id) MATCH SIMPLE,
