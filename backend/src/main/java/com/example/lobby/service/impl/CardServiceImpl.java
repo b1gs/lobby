@@ -29,7 +29,9 @@ public class CardServiceImpl implements CardService {
 
         int currentPlayer = 0;
         List<Set<Card>> playersCards = new ArrayList(players.size());
+
         initCardArray(playersCards , players.size());
+
         for ( Card card : getShuffledCards() ){
             playersCards.get(currentPlayer).add(card);
             currentPlayer++;

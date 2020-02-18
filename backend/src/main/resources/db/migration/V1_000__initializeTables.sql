@@ -63,6 +63,7 @@ CREATE TABLE player_card (
   player_id bigint NOT NULL ,
   rank CHARACTER VARYING (255) NOT NULL,
   suit CHARACTER VARYING (255) NOT NULL,
+  is_prikup bigint NOT NULL,
   PRIMARY KEY (player_id,rank,suit),
   CONSTRAINT fk_player FOREIGN KEY (player_id)
       REFERENCES lobby.player (id) MATCH SIMPLE

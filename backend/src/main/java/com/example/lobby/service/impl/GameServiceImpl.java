@@ -54,6 +54,9 @@ public class GameServiceImpl implements GameService {
 
         setTurnToNextPlayer(game);
 
+        removePlayerWithoutCards(currentTurnPlayerCards, game);
+
+        gameRepository.save(game);
         return isGameFinished(game);
 
     }

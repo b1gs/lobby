@@ -9,7 +9,7 @@ public class ChatMessage {
 
     private String username;
     private String message;
-    private Long firstTurnPlayerId;
+    private Integer currentTurnPlayerNumber;
 
 
     @Override
