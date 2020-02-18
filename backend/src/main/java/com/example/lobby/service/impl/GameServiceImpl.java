@@ -7,15 +7,14 @@ import com.example.lobby.domain.Room;
 import com.example.lobby.enums.GameState;
 import com.example.lobby.enums.Rank;
 import com.example.lobby.enums.Suit;
+import com.example.lobby.messaging.TurnMessage;
 import com.example.lobby.repo.GameRepository;
 import com.example.lobby.service.GameService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Component
 @Transactional
@@ -28,12 +27,66 @@ public class GameServiceImpl implements GameService {
     public Game create(Set<Player> players, Room room) {
         Player firstPlayer = determineFirstPlayer(players);
         Game game = new Game();
-        game.setCurrentTurnPlayerNumber(firstPlayer.getId());
+        game.setCurrentTurnPlayerNumber(1);
         game.setRoom(room);
         game.setGameStatus(GameState.IN_PROGRESS);
         game.setTurnNumber(0L);
         game.setPlayerTurnMap(preparePlayerTurnMap(firstPlayer, players));
         return gameRepository.save(game);
+    }
+
+    @Override
+    public boolean isPlayerTurn(Long roomId, TurnMessage turnMessage) {
+        Game game = gameRepository.findFirstByRoomId(roomId);
+        Player currentTurnPlayer = game.getCurrentTurnPlayer();
+        return currentTurnPlayer.getId().equals(turnMessage.getPlayerId());
+    }
+
+    @Override
+    public boolean makeTurn(TurnMessage turnMessage) {
+        Game game = gameRepository.getOne(turnMessage.getGameId());
+
+        Set<Card> turnCards = turnMessage.getCards();
+        Set<Card> currentTurnPlayerCards = game.getCurrentTurnPlayer().getPlayerCards();
+
+        addCardsToGameBank(game, turnCards);
+        removePlayerCards(currentTurnPlayerCards, currentTurnPlayerCards);
+
+        setTurnToNextPlayer(game);
+
+        return isGameFinished(game);
+
+    }
+
+    private void removePlayerWithoutCards(Set<Card> currentTurnPlayerCards,Game game ){
+        Map<Integer, Player> playerTurnMap = game.getPlayerTurnMap();
+        if (currentTurnPlayerCards.isEmpty()) {
+            playerTurnMap.remove(game.getCurrentTurnPlayerNumber());
+        }
+    }
+
+    private void setTurnToNextPlayer(Game game) {
+        Integer nextPlayerNumber = game.getCurrentTurnPlayerNumber() + 1;
+        if (nextPlayerNumber > game.getPlayerTurnMap().keySet().size()){
+            nextPlayerNumber=0;
+        }
+        game.setCurrentTurnPlayerNumber(nextPlayerNumber);
+    }
+
+    private void addCardsToGameBank(Game game, Set<Card> cards){
+        game.getBank().addAll(cards);
+    }
+
+    private void removePlayerCards(Set<Card> playerCards, Set<Card> turnCards){
+        playerCards.removeAll(turnCards);
+    }
+
+    private boolean isGameFinished(Game game){
+        Collection<Player> gamePlayers = game.getPlayerTurnMap().values();
+        if (gamePlayers.isEmpty()) {
+            return true;
+        }
+        return false;
     }
 
     private Player determineFirstPlayer(Set<Player> players) {
@@ -47,9 +100,9 @@ public class GameServiceImpl implements GameService {
         return null;
     }
 
-    private Map<Long, Player> preparePlayerTurnMap(Player firstPlayer, Set<Player> players) {
-        Map<Long, Player> playerTurnMap = new HashMap<>();
-        long ctr = 1L;
+    private Map<Integer, Player> preparePlayerTurnMap(Player firstPlayer, Set<Player> players) {
+        Map<Integer, Player> playerTurnMap = new HashMap<>();
+        int ctr = 1;
         playerTurnMap.put(ctr++, firstPlayer);
         for (Player player : players) {
             if (player.equals(firstPlayer)) {

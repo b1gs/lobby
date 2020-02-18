@@ -29,7 +29,7 @@ public class Game extends BaseEntity {
     private String gameType;
 
     @Column(name = "current_turn_number")
-    private Long currentTurnPlayerNumber;
+    private Integer currentTurnPlayerNumber;
 
     @OneToOne
     @JoinColumn(name = "room_id")
@@ -53,16 +53,10 @@ public class Game extends BaseEntity {
             inverseJoinColumns = {@JoinColumn(name = "game_id", referencedColumnName = "id")})
     @ElementCollection
     @Column(name="player_turn_number")
-    private Map<Long, Player> playerTurnMap;
+    private Map<Integer, Player> playerTurnMap;
 
     public Player getCurrentTurnPlayer(){
         return this.getPlayerTurnMap().get(this.currentTurnPlayerNumber);
-    }
-
-    public void makeTurn(TurnMessage turnMessage) {
-        Set<Card> turnCards = turnMessage.getCards();
-        bank.addAll(turnCards);
-        getCurrentTurnPlayer().getPlayerCards().removeAll(turnCards);
     }
 
     public void pickUpCards(TurnMessage turnMessage) {

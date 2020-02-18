@@ -28,7 +28,6 @@ public class GameController {
     private final ObjectMapper objectMapper;
     private final RoomService roomService;
     private final CardService cardService;
-    private final TurnService turnService;
     private final PlayerService playerService;
     private final GameService gameService;
 
@@ -57,8 +56,8 @@ public class GameController {
     @MessageMapping("{roomId}/turn")
     @SendTo("topic/{roomId}/turn")
     public void turn(@DestinationVariable Long roomId, @Payload TurnMessage message, Principal principal) {
-        if (turnService.isPlayerTurn(roomId, message)) {
-            turnService.makeTurn(message);
+        if (gameService.isPlayerTurn(roomId, message)) {
+            gameService.makeTurn(message);
         } else {
             throw new IllegalArgumentException("It is not you turn now!! Player: " + principal.getName());
         }
