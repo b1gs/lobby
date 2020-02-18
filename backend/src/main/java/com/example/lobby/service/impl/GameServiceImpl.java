@@ -9,6 +9,7 @@ import com.example.lobby.enums.Rank;
 import com.example.lobby.enums.Suit;
 import com.example.lobby.messaging.TurnMessage;
 import com.example.lobby.repo.GameRepository;
+import com.example.lobby.service.CardService;
 import com.example.lobby.service.GameService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -22,6 +23,7 @@ import java.util.*;
 public class GameServiceImpl implements GameService {
 
     private final GameRepository gameRepository;
+    private final CardService cardService;
 
     @Override
     public Game create(Set<Player> players, Room room) {
@@ -31,7 +33,8 @@ public class GameServiceImpl implements GameService {
         game.setRoom(room);
         game.setGameStatus(GameState.IN_PROGRESS);
         game.setTurnNumber(0L);
-        game.setPlayerTurnMap(preparePlayerTurnMap(firstPlayer, players));
+        game.setPlayerTurnMap(
+                cardService.handOverCards(preparePlayerTurnMap(firstPlayer, players)));
         return gameRepository.save(game);
     }
 

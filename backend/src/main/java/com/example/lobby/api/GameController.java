@@ -27,7 +27,6 @@ public class GameController {
     private final SimpMessagingTemplate simpMessagingTemplate;
     private final ObjectMapper objectMapper;
     private final RoomService roomService;
-    private final CardService cardService;
     private final PlayerService playerService;
     private final GameService gameService;
 
@@ -43,8 +42,9 @@ public class GameController {
                 throw new IllegalArgumentException("Not all playerTurnMap is ready");
             }
         }
-        Set<Player> players = cardService.handOverCards(room.getPlayers());
+        Set<Player> players = room.getPlayers();
         Game game = gameService.create(players, room);
+
         for (Player p : players) {
             message.setUsername("CARDS_MESSAGE");
             message.setCurrentTurnPlayerNumber(game.getCurrentTurnPlayerNumber());

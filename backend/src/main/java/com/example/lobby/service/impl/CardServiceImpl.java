@@ -3,12 +3,10 @@ package com.example.lobby.service.impl;
 import com.example.lobby.domain.Card;
 import com.example.lobby.domain.Deck;
 import com.example.lobby.domain.Player;
-import com.example.lobby.repo.CardRepository;
 import com.example.lobby.service.CardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.util.*;
 
 @Component
@@ -25,34 +23,26 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
-    public Set<Player> handOverCards(Set<Player> players) {
+    public Map<Integer,Player> handOverCards(Map<Integer,Player> playersTurnMap) {
 
-        int currentPlayer = 0;
-        List<Set<Card>> playersCards = new ArrayList(players.size());
-
-        initCardArray(playersCards , players.size());
+        int currentPlayer = 1;
+        int prikupCardsCounter = 0;
+        int playersInGame = playersTurnMap.size();
 
         for ( Card card : getShuffledCards() ){
-            playersCards.get(currentPlayer).add(card);
+            if (prikupCardsCounter < playersInGame * 2 ) {
+                card.setPrikup(true);
+                prikupCardsCounter++;
+                playersTurnMap.get(currentPlayer).getPlayerPrikup().add(card);
+            }else {
+                playersTurnMap.get(currentPlayer).getPlayerCards().add(card);
+            }
             currentPlayer++;
-            if (currentPlayer > players.size() - 1){
+            if (currentPlayer > playersInGame){
                 currentPlayer = 0;
             }
         }
-        currentPlayer = 0;
-        for(Player p : players){
-            System.out.println("Players card before set:  " + p.getPlayerCards());
-            p.setPlayerCards(playersCards.get(currentPlayer++));
-        }
-        for (Set<Card> cards : playersCards){
-            System.out.println(cards);
-        }
-        return players;
-    }
 
-    private void initCardArray(List<Set<Card>> playersCards, int numberOfPlayers){
-        for(int i = 0; i < numberOfPlayers; i++){
-            playersCards.add(new HashSet<Card>());
-        }
+        return playersTurnMap;
     }
 }

@@ -4,12 +4,13 @@ import com.example.lobby.domain.Card;
 import com.example.lobby.domain.Player;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public interface CardService {
 
     List<Card> getShuffledCards();
 
-    Set<Player> handOverCards(Set<Player> players);
+    Map<Integer,Player> handOverCards(Map<Integer,Player> playersTurnMap);
 
 }

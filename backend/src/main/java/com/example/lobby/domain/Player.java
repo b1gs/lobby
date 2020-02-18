@@ -4,6 +4,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -36,10 +37,14 @@ public class Player extends BaseEntity {
     @JoinColumn(name = "room_id", columnDefinition = "int8", nullable = true)
     private Room room;
 
+    @ElementCollection(fetch = FetchType.EAGER)
+    @JoinTable(name = "player_card", joinColumns = @JoinColumn(name = "player_id"))
+    private Set<Card> playerPrikup;
+
     @ManyToMany
     @JoinTable( name = "player_card" ,
-                joinColumns = { @JoinColumn(name = "player_id")},
-                inverseJoinColumns = {@JoinColumn(name = "card_id")})
+                joinColumns = { @JoinColumn(name = "player_id")})
+//    @Where("")
     private Set<Card> playerCards;
 
 }

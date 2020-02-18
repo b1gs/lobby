@@ -14,12 +14,17 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Embeddable
 public class Card {
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "suit")
     protected Suit suit;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "rank")
     protected Rank rank;
 
+    @Column(name="is_prikup")
+    private boolean isPrikup;
 }
