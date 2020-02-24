@@ -25,6 +25,6 @@ public class Card {
     @Column(name = "rank")
     protected Rank rank;
 
-    @Column(name="is_prikup")
+    @Column(name = "is_prikup")
     private boolean isPrikup;
 }

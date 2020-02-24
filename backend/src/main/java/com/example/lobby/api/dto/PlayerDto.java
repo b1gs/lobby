@@ -11,7 +11,7 @@ import lombok.ToString;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class PlayerDto extends  BaseDto {
+public class PlayerDto extends BaseDto {
 
     private Long id;
     private String username;

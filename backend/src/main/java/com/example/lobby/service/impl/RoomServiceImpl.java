@@ -36,8 +36,8 @@ public class RoomServiceImpl implements RoomService {
     @Override
     public Room update(Long roomId, Room room) {
         Room existingRoom = roomRepository.getOne(roomId);
-        if (existingRoom == null){
-            throw new IllegalArgumentException("Room(id="+roomId+")" + "  NOT EXISTS");
+        if (existingRoom == null) {
+            throw new IllegalArgumentException("Room(id=" + roomId + ")" + "  NOT EXISTS");
         }
         room.setId(roomId);
         return roomRepository.save(room);

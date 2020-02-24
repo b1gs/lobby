@@ -7,8 +7,7 @@ import java.util.Set;
 public class GameUtil {
 
 
-
-    public static void shuffle(Set<Player> players){
+    public static void shuffle(Set<Player> players) {
 
     }
 

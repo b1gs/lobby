@@ -33,12 +33,12 @@ public class ChatController {
     @SubscribeMapping("{roomId}/chat.participants")
     public Collection<LoginEvent> retrieveParticipants(@DestinationVariable Long roomId) {
         Collection<LoginEvent> participants = participantRepository.getActiveSessions().values();
-        return participants.stream().filter(participant ->participant.getRoomId().equals(roomId)).collect(Collectors.toList());
+        return participants.stream().filter(participant -> participant.getRoomId().equals(roomId)).collect(Collectors.toList());
     }
 
     @MessageMapping("{roomId}/chat.message/")
     @SendTo("/topic/{roomId}/chat.message")
-    public ChatMessage filterMessage(@Payload ChatMessage message, Principal principal, @DestinationVariable String roomId ) {
+    public ChatMessage filterMessage(@Payload ChatMessage message, Principal principal, @DestinationVariable String roomId) {
         checkProfanityAndSanitize(message);
         System.out.println("RoomId= " + roomId);
         message.setUsername(principal.getName());

@@ -39,8 +39,8 @@ public class Game extends BaseEntity {
     public Long turnNumber;
 
     @ManyToMany
-    @JoinTable(name="TABLE_A_B", joinColumns={@JoinColumn(name="ID_A")}, inverseJoinColumns={@JoinColumn(name="ID_B")})
-    @OrderBy(value="orderField")
+    @JoinTable(name = "TABLE_A_B", joinColumns = {@JoinColumn(name = "ID_A")}, inverseJoinColumns = {@JoinColumn(name = "ID_B")})
+    @OrderBy(value = "orderField")
     public List<Card> bank;
 
     public boolean isFirstPlayerTurn() {
@@ -52,10 +52,10 @@ public class Game extends BaseEntity {
             joinColumns = {@JoinColumn(name = "player_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "game_id", referencedColumnName = "id")})
     @ElementCollection
-    @Column(name="player_turn_number")
+    @Column(name = "player_turn_number")
     private Map<Integer, Player> playerTurnMap;
 
-    public Player getCurrentTurnPlayer(){
+    public Player getCurrentTurnPlayer() {
         return this.getPlayerTurnMap().get(this.currentTurnPlayerNumber);
     }
 

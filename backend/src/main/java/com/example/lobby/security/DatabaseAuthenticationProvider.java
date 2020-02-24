@@ -15,7 +15,7 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class DatabaseAuthenticationProvider implements AuthenticationProvider{
+public class DatabaseAuthenticationProvider implements AuthenticationProvider {
 
 
     private static final String SECURE_ADMIN_PASSWORD = "rockandroll";
@@ -27,13 +27,13 @@ public class DatabaseAuthenticationProvider implements AuthenticationProvider{
 
         Player player = playerRepository.getPlayerByUsername(authToken.getPrincipal().toString());
 
-        if (player== null){
+        if (player == null) {
             return null;
-        }else if (player.getPassword().equals(authToken.getCredentials())){
+        } else if (player.getPassword().equals(authToken.getCredentials())) {
             List<GrantedAuthority> authorities = null;
-            if ("admin".equals(authToken.getCredentials())){
+            if ("admin".equals(authToken.getCredentials())) {
                 authorities = AuthorityUtils.createAuthorityList("ROLE_ADMIN");
-            }else {
+            } else {
                 authorities = AuthorityUtils.createAuthorityList("ROLE_PLAYER");
             }
             UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(authToken.getName(), authToken.getCredentials(), authorities);
@@ -48,7 +48,7 @@ public class DatabaseAuthenticationProvider implements AuthenticationProvider{
         return UsernamePasswordAuthenticationToken.class.isAssignableFrom(authentication);
     }
 
-    private PlayerDetails createPlayerDetails(Player player){
+    private PlayerDetails createPlayerDetails(Player player) {
         PlayerDetails details = new PlayerDetails();
         details.setId(player.getId());
         return details;

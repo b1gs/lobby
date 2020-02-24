@@ -64,7 +64,7 @@ public class GameServiceImpl implements GameService {
 
     }
 
-    private void removePlayerWithoutCards(Set<Card> currentTurnPlayerCards,Game game ){
+    private void removePlayerWithoutCards(Set<Card> currentTurnPlayerCards, Game game) {
         Map<Integer, Player> playerTurnMap = game.getPlayerTurnMap();
         if (currentTurnPlayerCards.isEmpty()) {
             playerTurnMap.remove(game.getCurrentTurnPlayerNumber());
@@ -73,21 +73,21 @@ public class GameServiceImpl implements GameService {
 
     private void setTurnToNextPlayer(Game game) {
         Integer nextPlayerNumber = game.getCurrentTurnPlayerNumber() + 1;
-        if (nextPlayerNumber > game.getPlayerTurnMap().keySet().size()){
-            nextPlayerNumber=0;
+        if (nextPlayerNumber > game.getPlayerTurnMap().keySet().size()) {
+            nextPlayerNumber = 0;
         }
         game.setCurrentTurnPlayerNumber(nextPlayerNumber);
     }
 
-    private void addCardsToGameBank(Game game, Set<Card> cards){
+    private void addCardsToGameBank(Game game, Set<Card> cards) {
         game.getBank().addAll(cards);
     }
 
-    private void removePlayerCards(Set<Card> playerCards, Set<Card> turnCards){
+    private void removePlayerCards(Set<Card> playerCards, Set<Card> turnCards) {
         playerCards.removeAll(turnCards);
     }
 
-    private boolean isGameFinished(Game game){
+    private boolean isGameFinished(Game game) {
         Collection<Player> gamePlayers = game.getPlayerTurnMap().values();
         if (gamePlayers.isEmpty()) {
             return true;

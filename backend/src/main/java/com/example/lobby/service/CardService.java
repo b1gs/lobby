@@ -11,6 +11,6 @@ public interface CardService {
 
     List<Card> getShuffledCards();
 
-    Map<Integer,Player> handOverCards(Map<Integer,Player> playersTurnMap);
+    Map<Integer, Player> handOverCards(Map<Integer, Player> playersTurnMap);
 
 }

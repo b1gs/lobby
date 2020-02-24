@@ -11,7 +11,7 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name="room")
+@Table(name = "room")
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = true, exclude = {"playerTurnMap"})
@@ -23,11 +23,11 @@ public class Room extends BaseEntity {
     @Column(name = "room_name")
     private String roomName;
 
-    @Column(name = "capacity" , nullable = false)
+    @Column(name = "capacity", nullable = false)
     private int capacity;
 
     @OneToOne
-    @JoinColumn(name="owner")
+    @JoinColumn(name = "owner")
     private Player owner;
 
     @OneToMany(targetEntity = Player.class, mappedBy = "room")

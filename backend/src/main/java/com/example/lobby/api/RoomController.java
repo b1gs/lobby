@@ -50,7 +50,7 @@ public class RoomController {
             @ApiResponse(code = HttpURLConnection.HTTP_OK, message = ApiResponseMessages.OK),
             @ApiResponse(code = HttpURLConnection.HTTP_INTERNAL_ERROR, message = ApiResponseMessages.INTERNAL_SERVER_ERROR)
     })
-    public List<RoomDto> getAllRooms(){
+    public List<RoomDto> getAllRooms() {
         return roomMapper.mapToDtos(roomService.getAllRooms());
     }
 
@@ -65,7 +65,7 @@ public class RoomController {
             @ApiResponse(code = HttpURLConnection.HTTP_OK, message = ApiResponseMessages.OK),
             @ApiResponse(code = HttpURLConnection.HTTP_INTERNAL_ERROR, message = ApiResponseMessages.INTERNAL_SERVER_ERROR)
     })
-    public RoomDto geRoom(@Valid @PathVariable Long roomId){
+    public RoomDto geRoom(@Valid @PathVariable Long roomId) {
         return roomMapper.mapToDto(roomService.getRoom(roomId));
     }
 
@@ -80,8 +80,8 @@ public class RoomController {
             @ApiResponse(code = HttpURLConnection.HTTP_OK, message = ApiResponseMessages.OK),
             @ApiResponse(code = HttpURLConnection.HTTP_INTERNAL_ERROR, message = ApiResponseMessages.INTERNAL_SERVER_ERROR)
     })
-    public RoomDto create(@Valid @RequestBody RoomDto roomDto ) {
-        Room room = roomMapper.mapToEntity( roomDto);
+    public RoomDto create(@Valid @RequestBody RoomDto roomDto) {
+        Room room = roomMapper.mapToEntity(roomDto);
         return roomMapper.mapToDto(roomService.create(room));
     }
 
@@ -99,7 +99,7 @@ public class RoomController {
             @ApiResponse(code = HttpURLConnection.HTTP_INTERNAL_ERROR, message = ApiResponseMessages.INTERNAL_SERVER_ERROR)
     })
     public RoomDto update(@PathVariable("roomId") Long roomId,
-                             @Valid @RequestBody RoomDto roomUpdateDto) throws NotFoundException {
+                          @Valid @RequestBody RoomDto roomUpdateDto) throws NotFoundException {
         Room roomUpdate = roomMapper.mapToEntity(roomUpdateDto);
         return roomMapper.mapToDto(roomService.update(roomId, roomUpdate));
     }
@@ -116,7 +116,7 @@ public class RoomController {
             @ApiResponse(code = HttpURLConnection.HTTP_NOT_FOUND, message = ApiResponseMessages.NOT_FOUND),
             @ApiResponse(code = HttpURLConnection.HTTP_INTERNAL_ERROR, message = ApiResponseMessages.INTERNAL_SERVER_ERROR)
     })
-    public void delete(@Valid @PathVariable Long roomId ) {
+    public void delete(@Valid @PathVariable Long roomId) {
         roomService.delete(roomId);
     }
 
@@ -132,15 +132,15 @@ public class RoomController {
             @ApiResponse(code = HttpURLConnection.HTTP_NOT_FOUND, message = ApiResponseMessages.NOT_FOUND),
             @ApiResponse(code = HttpURLConnection.HTTP_INTERNAL_ERROR, message = ApiResponseMessages.INTERNAL_SERVER_ERROR)
     })
-    public void addPlayerToRoom(@Valid @PathVariable Long roomId ) {
+    public void addPlayerToRoom(@Valid @PathVariable Long roomId) {
 
-        Object details = ((UsernamePasswordAuthenticationToken)SecurityContextHolder.getContext().getAuthentication()).getDetails();
+        Object details = ((UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication()).getDetails();
 
-        Player player = playerService.getPlayer(((PlayerDetails)details).getId());
+        Player player = playerService.getPlayer(((PlayerDetails) details).getId());
         Room room = roomService.getRoom(roomId);
-        if (player != null && room!=null){
-            playerService.addPlayerToRoom(player , room);
-        }else{
+        if (player != null && room != null) {
+            playerService.addPlayerToRoom(player, room);
+        } else {
             throw new IllegalArgumentException("Player or room is null");
         }
 
@@ -159,13 +159,13 @@ public class RoomController {
             @ApiResponse(code = HttpURLConnection.HTTP_NOT_FOUND, message = ApiResponseMessages.NOT_FOUND),
             @ApiResponse(code = HttpURLConnection.HTTP_INTERNAL_ERROR, message = ApiResponseMessages.INTERNAL_SERVER_ERROR)
     })
-    public void removePlayerFromRoom(@Valid @PathVariable Long roomId , @Valid @PathVariable Long playerId  ) {
+    public void removePlayerFromRoom(@Valid @PathVariable Long roomId, @Valid @PathVariable Long playerId) {
 
         Player player = playerService.getPlayer(playerId);
         Room room = roomService.getRoom(roomId);
-        if (player != null && room!=null){
-            playerService.removePlayerFromRoom(player , room);
-        }else{
+        if (player != null && room != null) {
+            playerService.removePlayerFromRoom(player, room);
+        } else {
             throw new IllegalArgumentException("Player or room is null");
         }
 

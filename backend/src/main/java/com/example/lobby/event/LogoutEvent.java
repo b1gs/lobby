@@ -5,7 +5,7 @@ public class LogoutEvent {
     private String username;
     private Long roomId;
 
-    public LogoutEvent(String username, Long roomId ) {
+    public LogoutEvent(String username, Long roomId) {
         this.username = username;
     }
 

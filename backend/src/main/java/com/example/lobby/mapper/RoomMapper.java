@@ -8,10 +8,10 @@ import java.util.List;
 
 @Mapper(componentModel = "spring",
         unmappedTargetPolicy = ReportingPolicy.IGNORE,
-        uses = { JpaEntityMapper.class })
+        uses = {JpaEntityMapper.class})
 public interface RoomMapper {
 
-//    @Mappings({
+    //    @Mappings({
 //            @Mapping(source = "phone", target = "phoneNumber")
 //    })
     Room mapToEntity(RoomDto roomDto);

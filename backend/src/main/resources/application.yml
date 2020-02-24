@@ -4,8 +4,8 @@ server:
 spring:
   application:
     name: lobby
-#  session:
-#    store-type: hash_map
+  #  session:
+  #    store-type: hash_map
   datasource:
     platform: postgres
     driver-class-name: org.postgresql.Driver

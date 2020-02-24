@@ -54,7 +54,7 @@ public class ChatConfig {
     }
 
     @Bean
-    public SessionRepository<ExpiringSession> sessionRepository(){
+    public SessionRepository<ExpiringSession> sessionRepository() {
         MapSessionRepository repository = new MapSessionRepository();
         repository.setDefaultMaxInactiveInterval(60);
         return repository;

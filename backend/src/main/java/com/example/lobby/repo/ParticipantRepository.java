@@ -17,7 +17,7 @@ public class ParticipantRepository {
         return activeSessions.get(sessionId);
     }
 
-    public void removeParticipant(String sessionId ) {
+    public void removeParticipant(String sessionId) {
         activeSessions.remove(sessionId);
     }
 

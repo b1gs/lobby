@@ -23,26 +23,29 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
-    public Map<Integer,Player> handOverCards(Map<Integer,Player> playersTurnMap) {
+    public Map<Integer, Player> handOverCards(Map<Integer, Player> playersTurnMap) {
 
         int currentPlayer = 1;
-        int prikupCardsCounter = 0;
         int playersInGame = playersTurnMap.size();
 
-        for ( Card card : getShuffledCards() ){
-            if (prikupCardsCounter < playersInGame * 2 ) {
+        for (Card card : getShuffledCards()) {
+            Player player = playersTurnMap.get(currentPlayer);
+            if (player.getPlayerPrikup().size() < 2) {
                 card.setPrikup(true);
-                prikupCardsCounter++;
-                playersTurnMap.get(currentPlayer).getPlayerPrikup().add(card);
-            }else {
-                playersTurnMap.get(currentPlayer).getPlayerCards().add(card);
+                player.getPlayerPrikup().add(card);
+            } else {
+                player.getPlayerCards().add(card);
             }
-            currentPlayer++;
-            if (currentPlayer > playersInGame){
-                currentPlayer = 0;
-            }
+            currentPlayer = getNextTurnPlayerNumber(++currentPlayer, playersInGame);
         }
 
         return playersTurnMap;
+    }
+
+    private int getNextTurnPlayerNumber(int currentPlayerNumber, int playersInGame) {
+        if (currentPlayerNumber > playersInGame) {
+            currentPlayerNumber = 1;
+        }
+        return currentPlayerNumber;
     }
 }

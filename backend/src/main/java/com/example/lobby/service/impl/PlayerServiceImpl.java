@@ -11,7 +11,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Component
-public class PlayerServiceImpl  implements PlayerService {
+public class PlayerServiceImpl implements PlayerService {
 
     private final PlayerRepository playerRepository;
 
@@ -38,8 +38,8 @@ public class PlayerServiceImpl  implements PlayerService {
     @Override
     public Player update(Long id, Player player) {
         Player existingPlayer = playerRepository.getOne(id);
-        if (existingPlayer == null ){
-            throw new IllegalArgumentException("Player(id="+id+")" + "  NOT EXISTS");
+        if (existingPlayer == null) {
+            throw new IllegalArgumentException("Player(id=" + id + ")" + "  NOT EXISTS");
         }
         player.setId(id);
         return playerRepository.save(player);
@@ -52,25 +52,25 @@ public class PlayerServiceImpl  implements PlayerService {
 
     @Override
     public void addPlayerToRoom(Player player, Room room) {
-        if (room.getPlayers()!=null && room.getPlayers().size()==0){
+        if (room.getPlayers() != null && room.getPlayers().size() == 0) {
             room.setOwner(player);
         }
-        if(room.getPlayers()!=null && room.getPlayers().size() < room.getCapacity()){
+        if (room.getPlayers() != null && room.getPlayers().size() < room.getCapacity()) {
             player.setRoom(room);
             playerRepository.save(player);
-        }else {
-            throw new IllegalArgumentException("The Room(id="+room.getId()+") is FULL");
+        } else {
+            throw new IllegalArgumentException("The Room(id=" + room.getId() + ") is FULL");
         }
 
     }
 
     @Override
     public void removePlayerFromRoom(Player player, Room room) {
-        if (room.getPlayers().contains(player)){
+        if (room.getPlayers().contains(player)) {
             player.setRoom(null);
             playerRepository.save(player);
-        }else {
-            throw new IllegalArgumentException("Pleyer(id="+player.getId() +  " is not belong to the Room(id="+room.getId() + ")");
+        } else {
+            throw new IllegalArgumentException("Pleyer(id=" + player.getId() + " is not belong to the Room(id=" + room.getId() + ")");
         }
     }
 }

@@ -16,7 +16,7 @@ import javax.persistence.*;
 @Table(name = "turn")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class Turn extends BaseEntity{
+public class Turn extends BaseEntity {
 
 
     @Column(name = "rank", nullable = false)

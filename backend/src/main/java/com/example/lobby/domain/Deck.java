@@ -16,7 +16,7 @@ public class Deck {
         deck = new LinkedList<>();
         for (Rank rank : Rank.values()) {
             for (Suit suit : Suit.values()) {
-                deck.add(new Card(suit, rank,false));
+                deck.add(new Card(suit, rank, false));
             }
         }
     }

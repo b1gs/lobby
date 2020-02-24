@@ -14,23 +14,23 @@ import java.util.Set;
 @Entity
 @Table(name = "player")
 @EqualsAndHashCode(callSuper = true, exclude = {"room", "playerCards"})
-@ToString(callSuper = true, exclude = {"room", "playerCards"} )
+@ToString(callSuper = true, exclude = {"room", "playerCards"})
 public class Player extends BaseEntity {
 
 
-    @Column(name = "username" , nullable = false )
+    @Column(name = "username", nullable = false)
     private String username;
 
-    @Column(name = "email" , nullable = false , unique = true)
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-    @Column(name = "password" , nullable = false )
+    @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "is_ready" , nullable = true )
+    @Column(name = "is_ready", nullable = true)
     private boolean isReady = true;
 
-    @Column(name = "is_player_turn" , nullable = true )
+    @Column(name = "is_player_turn", nullable = true)
     private boolean isPlayerTurn = true;
 
     @ManyToOne
@@ -42,8 +42,8 @@ public class Player extends BaseEntity {
     private Set<Card> playerPrikup;
 
     @ManyToMany
-    @JoinTable( name = "player_card" ,
-                joinColumns = { @JoinColumn(name = "player_id")})
+    @JoinTable(name = "player_card",
+            joinColumns = {@JoinColumn(name = "player_id")})
 //    @Where("")
     private Set<Card> playerCards;
 

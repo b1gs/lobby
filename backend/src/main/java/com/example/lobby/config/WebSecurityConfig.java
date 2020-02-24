@@ -18,28 +18,28 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
-            .formLogin()
-            .loginPage("/index.html")
-            .loginProcessingUrl("/login")
-            .defaultSuccessUrl("/lobby.html")
-            .permitAll()
-            .and()
-            .logout()
-            .logoutSuccessUrl("/index.html")
-            .permitAll()
-            .and()
-            .authorizeRequests()
-            .antMatchers( "/api-docs").permitAll()
-            .antMatchers( "/swagger-ui.html").permitAll()
-            .antMatchers( "/v1/**").permitAll()
-            .antMatchers("/js/**", "/lib/**", "/images/**", "/css/**", "/index.html", "/").permitAll()
-            .antMatchers("/websocket").hasRole("ADMIN")
-            .anyRequest().authenticated();
+                .formLogin()
+                .loginPage("/index.html")
+                .loginProcessingUrl("/login")
+                .defaultSuccessUrl("/lobby.html")
+                .permitAll()
+                .and()
+                .logout()
+                .logoutSuccessUrl("/index.html")
+                .permitAll()
+                .and()
+                .authorizeRequests()
+                .antMatchers("/api-docs").permitAll()
+                .antMatchers("/swagger-ui.html").permitAll()
+                .antMatchers("/v1/**").permitAll()
+                .antMatchers("/js/**", "/lib/**", "/images/**", "/css/**", "/index.html", "/").permitAll()
+                .antMatchers("/websocket").hasRole("ADMIN")
+                .anyRequest().authenticated();
 
     }
 
     @Bean
-    public AuthenticationProvider authenticationProvider(PlayerRepository playerRepository){
+    public AuthenticationProvider authenticationProvider(PlayerRepository playerRepository) {
         return new DatabaseAuthenticationProvider(playerRepository);
     }
 

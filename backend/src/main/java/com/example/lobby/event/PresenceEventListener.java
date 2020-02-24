@@ -29,7 +29,7 @@ public class PresenceEventListener {
 
     private static String TOPIC = "/topic/";
 
-    public PresenceEventListener(SimpMessagingTemplate messagingTemplate, ParticipantRepository participantRepository , PlayerRepository playerRepository) {
+    public PresenceEventListener(SimpMessagingTemplate messagingTemplate, ParticipantRepository participantRepository, PlayerRepository playerRepository) {
         this.messagingTemplate = messagingTemplate;
         this.participantRepository = participantRepository;
         this.playerRepository = playerRepository;
@@ -41,13 +41,13 @@ public class PresenceEventListener {
         String username = headers.getUser().getName();
 
         Player player = playerRepository.getPlayerByUsername(username);
-        if (player.getRoom() == null ){
-            LOGGER.error("Room is null!!! Check THIS OUT! It must be not null" );
+        if (player.getRoom() == null) {
+            LOGGER.error("Room is null!!! Check THIS OUT! It must be not null");
         }
 
-        LoginEvent loginEvent = new LoginEvent(username,player.getRoom().getId() );
+        LoginEvent loginEvent = new LoginEvent(username, player.getRoom().getId());
 
-        messagingTemplate.convertAndSend(TOPIC + player.getRoom().getId()+loginDestination, loginEvent);
+        messagingTemplate.convertAndSend(TOPIC + player.getRoom().getId() + loginDestination, loginEvent);
 
         // We store the session as we need to be idempotent in the disconnect event processing
         participantRepository.add(headers.getSessionId(), loginEvent
@@ -59,7 +59,7 @@ public class PresenceEventListener {
         removePlayerFromRoom(event);
         Optional.ofNullable(participantRepository.getParticipant(event.getSessionId()))
                 .ifPresent(login -> {
-                    messagingTemplate.convertAndSend(TOPIC+logoutDestination, new LogoutEvent(login.getUsername(),login.getRoomId()));
+                    messagingTemplate.convertAndSend(TOPIC + logoutDestination, new LogoutEvent(login.getUsername(), login.getRoomId()));
                     participantRepository.removeParticipant(event.getSessionId());
                 });
     }
@@ -72,7 +72,7 @@ public class PresenceEventListener {
         this.logoutDestination = logoutDestination;
     }
 
-    private void removePlayerFromRoom(SessionDisconnectEvent event){
+    private void removePlayerFromRoom(SessionDisconnectEvent event) {
         LoginEvent participant = participantRepository.getParticipant(event.getSessionId());
         Player player = playerRepository.getPlayerByUsername(participant.getUsername());
         player.setRoom(null);

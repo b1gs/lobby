@@ -15,12 +15,12 @@ public interface PlayerService {
 
     Player create(Player player);
 
-    Player update(Long id , Player player);
+    Player update(Long id, Player player);
 
     void delete(Long id);
 
-    void addPlayerToRoom(Player player , Room room);
+    void addPlayerToRoom(Player player, Room room);
 
-    void removePlayerFromRoom(Player player , Room room);
+    void removePlayerFromRoom(Player player, Room room);
 
 }
