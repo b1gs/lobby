@@ -18,7 +18,6 @@ import java.util.List;
 public class DatabaseAuthenticationProvider implements AuthenticationProvider {
 
 
-    private static final String SECURE_ADMIN_PASSWORD = "rockandroll";
     private final PlayerRepository playerRepository;
 
     @Override

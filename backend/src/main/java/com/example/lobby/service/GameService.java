@@ -15,4 +15,6 @@ public interface GameService {
     boolean isPlayerTurn(Long roomId, TurnMessage turnMessage);
 
     boolean makeTurn(TurnMessage turnMessage);
+
+    void pickUpCards(TurnMessage turnMessage);
 }

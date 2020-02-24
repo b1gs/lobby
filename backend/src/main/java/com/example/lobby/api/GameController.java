@@ -3,6 +3,7 @@ package com.example.lobby.api;
 import com.example.lobby.domain.Game;
 import com.example.lobby.domain.Player;
 import com.example.lobby.domain.Room;
+import com.example.lobby.enums.TurnType;
 import com.example.lobby.messaging.ChatMessage;
 import com.example.lobby.messaging.TurnMessage;
 import com.example.lobby.service.*;
@@ -57,7 +58,11 @@ public class GameController {
     @SendTo("topic/{roomId}/turn")
     public void turn(@DestinationVariable Long roomId, @Payload TurnMessage message, Principal principal) {
         if (gameService.isPlayerTurn(roomId, message)) {
-            gameService.makeTurn(message);
+            if (TurnType.TURN == message.getTurnType()){
+                gameService.makeTurn(message);
+            }else {
+                gameService.pickUpCards(message);
+            }
         } else {
             throw new IllegalArgumentException("It is not you turn now!! Player: " + principal.getName());
         }

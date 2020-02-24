@@ -50,18 +50,42 @@ public class GameServiceImpl implements GameService {
         Game game = gameRepository.getOne(turnMessage.getGameId());
 
         Set<Card> turnCards = turnMessage.getCards();
-        Set<Card> currentTurnPlayerCards = game.getCurrentTurnPlayer().getPlayerCards();
+        Player currentTurnPlayer = game.getCurrentTurnPlayer();
+        Set<Card> currentTurnPlayerCards = currentTurnPlayer.getPlayerCards();
 
         addCardsToGameBank(game, turnCards);
         removePlayerCards(currentTurnPlayerCards, currentTurnPlayerCards);
 
+        takePrikupOrRemovePlayerWithoutCards(game, currentTurnPlayer);
+
         setTurnToNextPlayer(game);
 
-        removePlayerWithoutCards(currentTurnPlayerCards, game);
-
         gameRepository.save(game);
+
         return isGameFinished(game);
 
+    }
+
+    private void takePrikupOrRemovePlayerWithoutCards(Game game, Player currentTurnPlayer) {
+        Set<Card> playerCards = currentTurnPlayer.getPlayerCards();
+        if (playerCards.isEmpty()) {
+            if (currentTurnPlayer.getPlayerPrikup().isEmpty()) {
+                removePlayerWithoutCards(playerCards, game);
+            } else {
+                playerCards.addAll(currentTurnPlayer.getPlayerPrikup());
+            }
+        }
+    }
+
+    @Override
+    public void pickUpCards(TurnMessage turnMessage) {
+        Game game = gameRepository.getOne(turnMessage.getGameId());
+        int bankSize = game.getBank().size();
+        List<Card> cardsToPickUp = game.getBank().subList(bankSize - 5, bankSize - 1);
+
+        game.getCurrentTurnPlayer().getPlayerCards().addAll(cardsToPickUp);
+
+        gameRepository.save(game);
     }
 
     private void removePlayerWithoutCards(Set<Card> currentTurnPlayerCards, Game game) {
