@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap - Prebuilt Layout</title>
+
+    <!-- Bootstrap -->
+	  <link href="lib/angularjs-toaster/toaster.css" rel="stylesheet">
+    <link href="../../../../../../site2/css/bootstrap-4.4.1.css" rel="stylesheet">
+
+  </head>
+  <body>
+    <div class="container" ng-controller="ChatController">
+    <toaster-container></toaster-container>
+
+    <div class="row">
+        <nav class="navbar navbar-inverse navbar-embossed" role="navigation">
+            <div class="collapse navbar-collapse" id="navbar-collapse-01">
+                <h1>Spring WebSocket Chat</h1>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/application/websocketstats" target="_blank">Stats</a></li>
+                    <li><a href="" ng-click="disconnect()">Logout ({{username}})</a></li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </nav><!-- /navbar -->
+    </div>
+    <div class="row">
+        <div class="col-xs-4">
+            <h4>Participants [{{participants.length}}]</h4>
+            <div class="share">
+                <ul ng-repeat="participant in participants">
+                    <li>
+                        <span class="input-icon fui-new" ng-show="participant.typing"></span>
+                        <span class="input-icon fui-user" ng-show="!participant.typing"></span>
+                        <a href="" ng-click="privateSending(participant.username)">{{participant.username}}</a>
+
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-xs-8 chat-box">
+            <h4>Messages</h4>
+            <div ng-repeat="message in messages">
+                <small print-message></small>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
+    <script src="../../../../../../site2/js/jquery-3.4.1.min.js"></script>
+
+    <!-- Include all compiled plugins (below), or include individual files as needed --> 
+    <script src="../../../../../../site2/js/popper.min.js"></script>
+    <script src="../../../../../../site2/js/bootstrap-4.4.1.js"></script>
+  </body>
+</html>

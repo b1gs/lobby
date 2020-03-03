@@ -1,0 +1,15 @@
+#login-form {
+    padding-top: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+    border-radius: 30px;
+    padding-left: 20px;
+}
+#bottom-panel {
+    height: 20vh;
+
+
+}
+#top-panel {
+    height: 80vh;
+}
